@@ -1,5 +1,6 @@
-var Mooem = window.Mooem = Ember.Application.create({
-    LOG_TRANSITIONS: true
+var App = window.App = Ember.Application.create({
+    LOG_TRANSITIONS: true,
+    LOG_VIEW_LOOKUPS: true
 });
 
 require('scripts/controllers/*');
