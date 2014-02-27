@@ -5,4 +5,5 @@ App.Router.map(function() {
         this.route('export');
         this.route('template', { path: ':template_id' });
     });
+    this.route('login');
 });

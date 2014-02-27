@@ -4,6 +4,9 @@ App.TemplatesIndexRoute = Ember.Route.extend({
     }, 
     setupController: function(controller, model) {
         controller.set('model', model);
+    },
+    beforeModel: function() {
+        this.transitionTo('login');
     }
 });
 App.TemplateRoute = Ember.Route.extend({
