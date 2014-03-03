@@ -15,7 +15,7 @@ module.exports = function (grunt) {
                 tasks: ['emberTemplates']
             },
             neuter: {
-                files: ['app/scripts/{,*/}*.js'],
+                files: ['app/scripts/**/*.js'],
                 // files: ['app/scripts/{,*/}*.coffee'],
                 tasks: ['neuter']
             },

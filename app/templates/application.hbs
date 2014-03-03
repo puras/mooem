@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {{#link-to 'index' class="navbar-brand"}}MooEM{{/link-to}}
+            {{#link-to 'index' class="navbar-brand"}}{{t app.name}}{{/link-to}}
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -22,35 +22,4 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li>{{#link-to 'templates'}}拓扑图{{/link-to}}</li>
-                <li>{{#link-to 'resources'}}资源数据{{/link-to}}</li>
-                <li>{{#link-to 'templates'}}资源模板{{/link-to}}</li>
-                <li>{{#link-to 'templates'}}资源域{{/link-to}}</li>
-                <li>{{#link-to 'templates'}}告警集合{{/link-to}}</li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li>{{#link-to 'resources'}}实时告警{{/link-to}}</li>
-                <li>{{#link-to 'templates'}}查询规则{{/link-to}}</li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li>{{#link-to 'resources'}}阀值管理{{/link-to}}</li>
-                <li>{{#link-to 'templates'}}资源模板{{/link-to}}</li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li>{{#link-to 'resources'}}Agent管理{{/link-to}}</li>
-                <li>{{#link-to 'templates'}}资源模板{{/link-to}}</li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="#">Nav item</a></li>
-                <li><a href="#">Nav Item</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            {{outlet}}
-        </div>
-    </div>
-</div>
+{{outlet}}

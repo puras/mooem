@@ -4,7 +4,12 @@ var App = window.App = Ember.Application.create({
     rootElement: '#wrapper'
 });
 
-require('scripts/controllers/*');
+require('scripts/messages.js');
+
+require('scripts/controllers/wizard.js');
+require('scripts/controllers/installer.js');
+require('scripts/controllers/installer/*');
+// require('scripts/controllers/*');
 require('scripts/store');
 require('scripts/models/*');
 require('scripts/routes/*');
