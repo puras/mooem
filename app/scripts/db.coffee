@@ -61,5 +61,7 @@ App.db.getWizardCurrentStep = (wizardType) ->
     console.log 'Trace: Entering db:getWizardCurrentStep function for ', wizardType
     App.db.data = localStorage.getObject 'mooem'
     if App.db.data[wizardType.capitalize()]
+        console.log 'get'
+        console.log App.db.data[wizardType.capitalize()]
         return App.db.data[wizardType.capitalize()]
     return 0

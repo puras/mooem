@@ -17,7 +17,8 @@ App.WizardController = Ember.Controller.extend
         console.log @get('isStepDisabled')
 
     currentStep: ( ->
-        console.log 'In setCurrentStep function'
+        console.log 'In currentStep function'
+        console.log App.db.getWizardCurrentStep(@get('name').substr(0, @get('name').length - 10))
         App.db.getWizardCurrentStep(@get('name').substr(0, @get('name').length - 10))
     ).property()
     setCurrentStep: ((currentStep, completed) ->
