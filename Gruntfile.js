@@ -14,9 +14,15 @@ module.exports = function (grunt) {
                 files: 'app/templates/{,*/}*.hbs',
                 tasks: ['emberTemplates']
             },
-            neuter: {
-                files: ['app/scripts/**/*.js'],
+            coffee: {
                 // files: ['app/scripts/{,*/}*.coffee'],
+                files: ['app/scripts/**/*.coffee'],
+                tasks: ['coffee:dist']
+            },
+            neuter: {
+                // files: ['app/scripts/**/*.js'],
+                // files: ['app/scripts/{,*/}*.coffee'],
+                files: ['app/.tmp/scripts/{,*/}*.js'],
                 tasks: ['neuter']
             },
             livereload: {
@@ -31,24 +37,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        neuter: {
-            app: {
-                options: {
-                    filepathTransform: function(filepath) {
-                        return 'app/' + filepath;
-                    }
-                },
-                src: 'app/scripts/app.js',
-                dest: 'app/.tmp/scripts/mooem-scripts.js'
-            }
-        },
-        coffee: {
-            compile: {
-                files: {
-                    'app/.tmp/scripts/app.js': 'app/.tmp/coffee/mooem-scripts.coffee'
-                }
-            }
-        },
         emberTemplates: {
             options: {
                 templateName: function(sourceFile) {
@@ -58,8 +46,40 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'app/.tmp/scripts/compiled-templates.js': 'app/templates/{,*/}*.hbs'
+                    'app/.tmp/dist/compiled-templates.js': 'app/templates/{,*/}*.hbs'
                 }
+            }
+        },
+        coffee: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'app/scripts',
+                    src: '{,*/}*.coffee',
+                    dest: 'app/.tmp/scripts',
+                    ext: '.js'
+                }]
+            },
+            test: {
+                files: [{
+                    expand: true,
+                    cwd: 'test/spec',
+                    src: '{,*/}*.coffee',
+                    dest: '.tmp/spec',
+                    ext: '.js'
+                }]
+            }
+        },
+        neuter: {
+            app: {
+                options: {
+                    template: "{%= src %}",
+                    filepathTransform: function(filepath) {
+                        return 'app/.tmp/' + filepath;
+                    }
+                },
+                src: 'app/.tmp/scripts/app.js',
+                dest: 'app/.tmp/dist/mooem-scripts.js'
             }
         }
     });
