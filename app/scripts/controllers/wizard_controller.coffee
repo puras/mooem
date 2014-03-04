@@ -1,7 +1,31 @@
 App.WizardController = Ember.Controller.extend
+    isStepDisabled: null
+    init: ->
+        @set 'isStepDisabled', []
+        @get('isStepDisabled').pushObject(
+            Ember.Object.create
+                step: 1
+                value: false
+        )
+        console.log @get('totalSteps')
+        @get('isStepDisabled').pushObject(
+            Ember.Object.create
+                step: step
+                value: true
+        ) for step in [2..@get('totalSteps') ]
+
+        console.log @get('isStepDisabled')
+
     currentStep: ( ->
-        0
+        console.log 'In setCurrentStep function'
+        App.db.getWizardCurrentStep(@get('name').substr(0, @get('name').length - 10))
     ).property()
+    setCurrentStep: ((currentStep, completed) ->
+        console.log 'In setCurrentStep function, the currentStep is ', currentStep
+        App.db.setWizardCurrentStep(@get('name').substr(0, @get('name').length - 10), currentStep, completed)
+        @set('currentStep', currentStep)
+    ).property()
+
     isStep0: ( ->
         @get('currentStep') == 0
     ).property('currentStep')
@@ -23,7 +47,7 @@ App.WizardController = Ember.Controller.extend
     isStep6: ( ->
         @get('currentStep') == 6
     ).property('currentStep')
-    
+
     gotoStep: (step) ->
         @transitionToRoute('/installer/step' + step)
     actions:

@@ -1,2 +1,3 @@
 App.InstallerController = App.WizardController.extend
-    step: 0
+    name: 'installerController'
+    totalSteps: 7
