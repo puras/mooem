@@ -11,7 +11,8 @@ module.exports = function (grunt) {
         },
         watch: {
             emberTemplates: {
-                files: 'app/templates/{,*/}*.hbs',
+                // files: 'app/templates/{,*/}*.hbs',
+                files: 'app/templates/**/*.hbs',
                 tasks: ['emberTemplates']
             },
             coffee: {
@@ -30,7 +31,7 @@ module.exports = function (grunt) {
                     livereload : 9090
                 },
                 files: [
-                    'app/.tmp/scripts/{,*/}*.js',
+                    'app/.tmp/dist/{,*/}*.js',
                     'app/*.html',
                     'app/assets/styles/{,*/}*.css',
                     'app/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -46,7 +47,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'app/.tmp/dist/compiled-templates.js': 'app/templates/{,*/}*.hbs'
+                    'app/.tmp/dist/mooem-templates.js': 'app/templates/{,*/}*.hbs'
                 }
             }
         },
