@@ -1,1 +1,76 @@
-<h1>Installer Step3 Page</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">{{t installer.step3.header}}</div>
+    <div class="panel-body">
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            为了有效的采集资源数据，请为资源选择对应的插件。
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td>资源</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="javascript:void(0);" onclick="$('#resource_select_plugin').show()">HP Server1</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" onclick="$('#resource_select_plugin').show()">HP Server2</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" onclick="$('#resource_select_plugin').show()">HP Server3</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" onclick="$('#resource_select_plugin').show()">HP Server4</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="resource_select_plugin" class="col-md-8" style="display: none;">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>插件</td>
+                                <td>描述</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>CPU</td>
+                                <td>采集目标主机CPU信息</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>内存</td>
+                                <td>采集目标主机内存信息</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>磁盘</td>
+                                <td>采集目标主机磁盘信息</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>网卡</td>
+                                <td>采集目标主机网卡信息</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default" onclick="$('.btn-primary').removeAttr('disabled');">部署Plugin</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-default" {{action 'prev'}}>{{t common.prev}}</button>
+        <button class="btn btn-primary" {{action 'next'}} disabled="disabled">{{t common.next}}</button>
+    </div>
+</div>
