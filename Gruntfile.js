@@ -23,7 +23,8 @@ module.exports = function (grunt) {
             neuter: {
                 // files: ['app/scripts/**/*.js'],
                 // files: ['app/scripts/{,*/}*.coffee'],
-                files: ['app/.tmp/scripts/{,*/}*.js'],
+                // files: ['app/.tmp/scripts/{,*/}*.js'],
+                files: ['app/.tmp/scripts/**/*.js'],
                 tasks: ['neuter']
             },
             livereload: {
@@ -56,7 +57,8 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'app/scripts',
-                    src: '{,*/}*.coffee',
+                    // src: '{,*/}*.coffee',
+                    src: '**/*.coffee',
                     dest: 'app/.tmp/scripts',
                     ext: '.js'
                 }]

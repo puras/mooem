@@ -6,8 +6,10 @@ App = window.App = Ember.Application.create
 require('scripts/messages')
 require('scripts/db')
 
+require('scripts/controllers/application_controller')
 require('scripts/controllers/wizard_controller')
 require('scripts/controllers/installer_controller')
+require('scripts/controllers/**/*')
 require('scripts/routes/*')
 require('scripts/router')
 

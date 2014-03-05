@@ -35,9 +35,6 @@ App.db.cleanUp = ->
 console.log 'doing a cleanup'
 App.db.cleanUp()
 
-console.log App.db.data
-console.log App.db.data['Installer']
-
 App.db.get = (namespace, key) ->
     console.log 'TRACE: Entering db:get ' + key
     App.db.data = localStorage.getObject 'mooem'
@@ -54,6 +51,9 @@ App.db.setLocalStorage = ->
 
 App.db.setWizardCurrentStep = (wizardType, currentStep) ->
     console.log 'Trace: Entering db:setWizardCurrentStep function'
+    console.log wizardType
+    console.log currentStep
+    App.db.data = localStorage.getObject 'mooem'
     App.db.data[wizardType.capitalize()].currentStep = currentStep
     localStorage.setObject('mooem', App.db.data)
 
@@ -61,7 +61,5 @@ App.db.getWizardCurrentStep = (wizardType) ->
     console.log 'Trace: Entering db:getWizardCurrentStep function for ', wizardType
     App.db.data = localStorage.getObject 'mooem'
     if App.db.data[wizardType.capitalize()]
-        console.log 'get'
-        console.log App.db.data[wizardType.capitalize()]
-        return App.db.data[wizardType.capitalize()]
+        return App.db.data[wizardType.capitalize()].currentStep
     return 0
