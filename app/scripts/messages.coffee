@@ -8,12 +8,15 @@ Em.I18n.translations =
         完成本向导后，便可使用系统。<br />
         更多内容，稍后再编，哈。
     '
-    'installer.step1.header': 'Agent安装配置'
-    'installer.step2.header': 'Agent安装'
-    'installer.step3.header': '关联插件'
-    'installer.step4.header': '关联域'
-    'installer.step5.header': '关联集合'
-    'installer.step6.header': '完成'
+    'installer.step1.header': '模板导入'
+    'installer.step2.header': '资源定义'
+    'installer.step3.header': '资源与插件关联'
+    'installer.step4.header': '资源与域关联'
+    'installer.step5.header': '域与集合关联'
+    'installer.step6.header': 'Agent安装配置'
+    'installer.step7.header': 'Agent安装'
+    'installer.step8.header': 'Agent与资源关联'
+    'installer.step9.header': '完成'
 
     'common.prev': '上一步'
     'common.next': '下一步'

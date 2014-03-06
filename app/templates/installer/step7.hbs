@@ -1,0 +1,114 @@
+<div class="panel panel-default">
+    <div class="panel-heading">{{t installer.step2.header}}</div>
+    <div class="panel-body">
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            至少定义一个与Agent有关联的资源!
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">资源列表 <a href="javascript:void(0)" onclick="$('#add_resource_form').show();" data-toggle="popover" {{translateAttr data-original-title="installer.step2.header" data-content="installer.step2.hostPattern.tooltip.content"}}>增加</a></div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td>资源名称</td>
+                            <td>资源描述</td>
+                            <td>关联Agent</td>
+                            <td>{{t common.operate}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HP Server</td>
+                            <td>HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器</td>
+                            <td>Yes</td>
+                            <td>
+                                <a href="javascript:void(null);">查看</a>
+                                <a href="javascript:void(null);" onclick="$('#add_resource_form').show();">增加子资源</a>
+                                <a href="javascript:void(null);">移除</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>HP Server</td>
+                            <td>HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器</td>
+                            <td>NO</td>
+                            <td>
+                                <a href="javascript:void(null);">查看</a>
+                                <a href="javascript:void(null);" onclick="$('#add_resource_form').show();">增加子资源</a>
+                                <a href="javascript:void(null);">移除</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="row">                    
+                    <div class="col-md-2">
+                        <button class="btn btn-default" onclick="$('#deploy_progress').show();up();">部署Agent</button>
+                    </div>
+                    <div class="col-md-10">
+                        <div id="deploy_progress" class="progress progress-striped" style="display: none;">
+                            <div id="progress_value" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span class="sr-only">0% Complete (success)</span>
+                            </div>
+                            <script type="text/javascript">
+                                var newval = 0;
+                                var st;
+                                function up() {
+                                    newval = parseInt(newval, 10) + 10;
+                                    if (newval <= 100) {
+                                        $('#progress_value').css('width', newval + '%').attr('aria-valuenow', newval);
+                                        st = setTimeout("up()", 1000);
+                                    } else {
+                                        clearTimeout(st);
+                                        $('.btn-primary').removeAttr('disabled');
+                                        newval = 0;
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="add_resource_form" class="panel panel-default" style="display: none;">
+            <div class="panel-heading">增加 xx(显示模板名称)类 资源</div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="resource_name" class="col-sm-2 control-label">资源名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="resource_name" name="resource_name" class="form-control" placeholder="资源名称" />
+                            {{view Ember.TextArea class="span6" valueBinding="content.installOptions.hostNames" rows="5" placeholder="host names"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource_att1" class="col-sm-2 control-label">属性1</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="resource_att1" name="resource_att1" class="form-control" placeholder="属性1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource_att2" class="col-sm-2 control-label">属性2</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="resource_att2" name="resource_att2" class="form-control" placeholder="属性2" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource_att3" class="col-sm-2 control-label">属性3</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="resource_att3" name="resource_att3" class="form-control" placeholder="属性3" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default" onclick="$('#add_resource_form').hide()">增加</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-default" {{action 'prev'}}>{{t common.prev}}</button>
+        <button class="btn btn-primary" {{action 'next'}} disabled="disabled">{{t common.next}}</button>
+    </div>
+</div>
