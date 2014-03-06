@@ -51,8 +51,6 @@ App.db.setLocalStorage = ->
 
 App.db.setWizardCurrentStep = (wizardType, currentStep) ->
     console.log 'Trace: Entering db:setWizardCurrentStep function'
-    console.log wizardType
-    console.log currentStep
     App.db.data = localStorage.getObject 'mooem'
     App.db.data[wizardType.capitalize()].currentStep = currentStep
     localStorage.setObject('mooem', App.db.data)

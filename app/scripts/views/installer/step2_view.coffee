@@ -1,0 +1,1 @@
+App.InstallerStep2View = App.InstallerStepView.extend()

@@ -11,6 +11,6 @@ require('scripts/controllers/wizard_controller')
 require('scripts/controllers/installer_controller')
 require('scripts/controllers/**/*')
 require('scripts/routes/*')
+require('scripts/views/*')
+require('scripts/views/**/*')
 require('scripts/router')
-
-App.db.data = App.Mooem

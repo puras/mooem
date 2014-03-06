@@ -7,14 +7,11 @@ App.WizardController = Ember.Controller.extend
                 step: 1
                 value: false
         )
-        console.log @get('totalSteps')
         @get('isStepDisabled').pushObject(
             Ember.Object.create
                 step: step
                 value: true
         ) for step in [2..@get('totalSteps') ]
-
-        console.log @get('isStepDisabled')
 
     currentStep: (->
         console.log 'In currentStep function'
