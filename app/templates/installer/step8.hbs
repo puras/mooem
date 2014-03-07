@@ -1,0 +1,67 @@
+<div class="panel panel-default">
+    <div class="panel-heading">{{t installer.step8.header}}</div>
+    <div class="panel-body">
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            为了有效的采集资源数据，请为资源选择对应的插件。
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td data-toggle="popover" {{translateAttr data-original-title="installer.step2.header" data-content="installer.step2.hostPattern.tooltip.content"}}>主机列表</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="javascript:void(0);" onclick="$('#resource_select_plugin').show()">192.168.1.188</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:void(0);" onclick="$('#resource_select_plugin').show()">192.168.1.166</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="resource_select_plugin" class="col-md-8" style="display: none;">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>资源</td>
+                                <td>描述</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>资源1</td>
+                                <td>采集目标主机CPU信息</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>资源2</td>
+                                <td>采集目标主机内存信息</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>资源3</td>
+                                <td>采集目标主机磁盘信息</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td>资源4</td>
+                                <td>采集目标主机网卡信息</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-default" {{action 'prev'}}>{{t common.prev}}</button>
+        <button class="btn btn-primary" {{action 'next'}}>{{t common.next}}</button>
+    </div>
+</div>

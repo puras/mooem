@@ -7,3 +7,7 @@ Ember.Router.map ->
         @route 'step4'
         @route 'step5'
         @route 'step6'
+        @route 'step7'
+        @route 'step8'
+        @route 'step9'
+        @route 'step10'

@@ -45,6 +45,18 @@ App.WizardController = Ember.Controller.extend
     isStep6: ( ->
         @get('currentStep') == 6
     ).property('currentStep')
+    isStep7: ( ->
+        @get('currentStep') == 7
+    ).property('currentStep')
+    isStep8: ( ->
+        @get('currentStep') == 8
+    ).property('currentStep')
+    isStep9: ( ->
+        @get('currentStep') == 9
+    ).property('currentStep')
+    isStep10: ( ->
+        @get('currentStep') == 10
+    ).property('currentStep')
 
     gotoStep: (step) ->
         @transitionToRoute('/installer/step' + step)
@@ -63,3 +75,11 @@ App.WizardController = Ember.Controller.extend
             @gotoStep(5)
         gotoStep6: ->
             @gotoStep(6)
+        gotoStep7: ->
+            @gotoStep(7)
+        gotoStep8: ->
+            @gotoStep(8)
+        gotoStep9: ->
+            @gotoStep(9)
+        gotoStep10: ->
+            @gotoStep(10)

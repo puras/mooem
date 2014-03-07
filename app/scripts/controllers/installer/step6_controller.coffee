@@ -4,6 +4,5 @@ App.InstallerStep6Controller = Ember.Controller.extend
     actions:
         prev: ->
             @get('controllers.installer').send('gotoStep5')
-        finish: ->
-            @get('controllers.installer').setCurrentStep(0)
-            @transitionToRoute('index')
+        next: ->
+            @get('controllers.installer').send('gotoStep7')

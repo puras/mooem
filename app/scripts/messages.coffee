@@ -16,7 +16,8 @@ Em.I18n.translations =
     'installer.step6.header': 'Agent安装配置'
     'installer.step7.header': 'Agent安装'
     'installer.step8.header': 'Agent与资源关联'
-    'installer.step9.header': '完成'
+    'installer.step9.header': 'Agent安装资源对应插件'
+    'installer.step10.header': '完成'
 
     'common.prev': '上一步'
     'common.next': '下一步'
