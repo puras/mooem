@@ -38,8 +38,6 @@ App.InstallerStep6Controller = Ember.Controller.extend
     ).observes('has_submitted', 'host_ips')
 
     is_submit_disabled: (->
-        console.log @get('ssh_key_error')
-        console.log if (@get('hosts_error') || @get('ssh_key_error') || @get('ssh_user_error')) then 'yes' else 'no'
         (@get('hosts_error') || @get('ssh_key_error') || @get('ssh_user_error'))
     ).property('hosts_error', 'ssh_key', 'ssh_user')
     
