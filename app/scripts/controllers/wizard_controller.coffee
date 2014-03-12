@@ -60,6 +60,17 @@ App.WizardController = Ember.Controller.extend
 
     gotoStep: (step) ->
         @transitionToRoute('/installer/step' + step)
+
+
+    clear_install_options: ->
+        install_options = jQuery.extend({}, @get('install_options_template'))
+        @set('content.install_options', install_options)
+
+    install_options_template:
+        host_ips: ''
+        ssh_key: ''
+        ssh_user: 'root'
+
     actions:
         gotoStep0: ->
             @gotoStep(0)
