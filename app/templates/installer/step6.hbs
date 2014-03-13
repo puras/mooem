@@ -23,7 +23,7 @@
                         <label for="resource_att1" data-toggle="popover" data-original-title="主机密钥" data-content="在配置免密码登录时，所生成的公密钥，以便能正常登录目标主机">主机密钥</label>
                         {{view App.SSHKeyFileUploader}}
                         {{
-                            textarea class="form-control" rows="3"
+                            textarea class="form-control" rows="3" id="ssh_key"
                             value=content.install_options.ssh_key
                             placeholder="SSH登录密钥"
                         }}

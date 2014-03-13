@@ -4,6 +4,9 @@ App = window.App = Ember.Application.create
     rootElement: '#wrapper'
 
 require('scripts/messages')
+require('scripts/config')
+require('scripts/status_codes')
+require('scripts/ajax')
 require('scripts/db')
 
 require('scripts/controllers/application_controller')

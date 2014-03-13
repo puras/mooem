@@ -67,9 +67,26 @@ App.WizardController = Ember.Controller.extend
         @set('content.install_options', install_options)
 
     install_options_template:
-        host_ips: ''
+        host_ips: '10.10.129.242'
         ssh_key: ''
         ssh_user: 'root'
+        req_id: null
+
+    launch_boot: (boot_data) ->
+        App.ajax.send
+            name: 'wizard.launch_boot'
+            sender: this
+            data:
+                'boot_data': boot_data
+            success: 'launch_boot_success_callback'
+            error: 'launch_boot_error_callback'
+    launch_boot_success_callback: (data)->
+        console.log 'TRACE: POST bootstrap succeeded'
+        console.log data
+
+    launch_boot_error_callback: ->
+        console.log 'ERROR: POST bootstrap failed'
+        alert 'Bootstrap call failed. Please try again.'
 
     actions:
         gotoStep0: ->

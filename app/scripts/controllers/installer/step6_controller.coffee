@@ -2,6 +2,8 @@ App.InstallerStep6Controller = Ember.Controller.extend
     needs: ['installer']
     has_submitted: false
     hosts_error: null
+    host_ip_arr: []
+    again_host_ips: []
     content: (->
         @get('controllers.installer.content')
     ).property('controllers.installer.content')
@@ -17,6 +19,9 @@ App.InstallerStep6Controller = Ember.Controller.extend
         if @get('has_submitted') && @get('ssh_key').trim() == ''
             'SSH Private Key is required'
     ).property('ssh_key', 'has_submitted')
+
+    set_ssh_key: (ssh_key) ->
+        @set('content.install_options.ssh_key', ssh_key)
 
     ssh_user: (->
         @get('content.install_options.ssh_user')
@@ -40,6 +45,36 @@ App.InstallerStep6Controller = Ember.Controller.extend
     is_submit_disabled: (->
         (@get('hosts_error') || @get('ssh_key_error') || @get('ssh_user_error'))
     ).property('hosts_error', 'ssh_key', 'ssh_user')
+
+    update_host_ip_arr: ->
+        @host_ip_arr = @get('host_ips').trim().split(new RegExp('\\s+', 'g'))
+        console.log @host_ip_arr
+        # TODO 在这里应该验证输入的IP列表是否有效
+    is_all_host_ips_valid: ->
+        true
+
+    proceed_next: (warning_confirmed) ->
+        ###
+        if @is_all_host_ips_valid() != true && !warning_confirmed
+            @warning_popup()
+            return false
+        ###
+        boot_data =
+            'verbose': true
+            'sshKey': @get('ssh_key')
+            'hosts': @get('host_ip_arr')
+            'user': @get('ssh_user')
+
+        req_id = @get('controllers.installer').launch_boot(boot_data)
+        console.log req_id
+        ###
+        if req_id == '0'
+            console.log 'Host Registration is currently in progress.  Please try again later.'
+        else
+            @set('content.install_options.req_id', req_id)
+            @save_hosts()
+        ###
+
     
     actions:
         prev: ->
@@ -54,5 +89,13 @@ App.InstallerStep6Controller = Ember.Controller.extend
             if (@get('hosts_error') || @get('ssh_key_error') || @get('ssh_user_error'))
                 console.log 2
                 return false
+
+            @update_host_ip_arr()
+            if !@host_ip_arr.length
+                @set('hosts_error', 'installer.step2.hostName.error.already_installed')
+                console.log 3
+                return false
+
+            @proceed_next()
 
             # @get('controllers.installer').send('gotoStep7')
