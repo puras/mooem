@@ -1,5 +1,6 @@
 App.WizardController = Ember.Controller.extend
     isStepDisabled: null
+    boot_req_id: null
     init: ->
         @set 'isStepDisabled', []
         @get('isStepDisabled').pushObject(
@@ -67,9 +68,9 @@ App.WizardController = Ember.Controller.extend
         @set('content.install_options', install_options)
 
     install_options_template:
-        host_ips: '10.10.129.242'
+        host_ips: '10.10.129.245'
         ssh_key: ''
-        ssh_user: 'root'
+        ssh_user: 'puras'
         req_id: null
 
     launch_boot: (boot_data) ->
@@ -80,9 +81,11 @@ App.WizardController = Ember.Controller.extend
                 'boot_data': boot_data
             success: 'launch_boot_success_callback'
             error: 'launch_boot_error_callback'
+        @get('boot_req_id')
     launch_boot_success_callback: (data)->
         console.log 'TRACE: POST bootstrap succeeded'
-        console.log data
+        console.log '---->', data.reqId
+        @set('boot_req_id', data.reqId)
 
     launch_boot_error_callback: ->
         console.log 'ERROR: POST bootstrap failed'

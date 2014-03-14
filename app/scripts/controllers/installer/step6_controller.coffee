@@ -53,6 +53,18 @@ App.InstallerStep6Controller = Ember.Controller.extend
     is_all_host_ips_valid: ->
         true
 
+    get_host_info: ->
+        host_ip_arr = @get('host_ip_arr')
+        host_info = {}
+        host_ip_arr.forEach (host)->
+            host_info[host] = 
+                name: host
+                boot_status: 'PENDING'
+        host_info
+    save_hosts: ->
+        @set('content.hosts', @get_host_info())
+        @get('controllers.installer').send('gotoStep7')
+
     proceed_next: (warning_confirmed) ->
         ###
         if @is_all_host_ips_valid() != true && !warning_confirmed
@@ -66,16 +78,15 @@ App.InstallerStep6Controller = Ember.Controller.extend
             'user': @get('ssh_user')
 
         req_id = @get('controllers.installer').launch_boot(boot_data)
-        console.log req_id
-        ###
-        if req_id == '0'
+        console.log '--------------->', typeof req_id
+        
+        if req_id == '0' || req_id == 0
             console.log 'Host Registration is currently in progress.  Please try again later.'
+            alert 'Host Registration is currently in progress.  Please try again later.'
         else
             @set('content.install_options.req_id', req_id)
             @save_hosts()
-        ###
 
-    
     actions:
         prev: ->
             @get('controllers.installer').send('gotoStep5')
@@ -97,5 +108,3 @@ App.InstallerStep6Controller = Ember.Controller.extend
                 return false
 
             @proceed_next()
-
-            # @get('controllers.installer').send('gotoStep7')
