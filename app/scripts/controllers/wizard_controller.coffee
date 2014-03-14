@@ -68,7 +68,7 @@ App.WizardController = Ember.Controller.extend
         @set('content.install_options', install_options)
 
     install_options_template:
-        host_ips: '10.10.129.245'
+        host_ips: '10.10.129.245\n10.10.129.244\n10.10.129.243'
         ssh_key: ''
         ssh_user: 'puras'
         req_id: null

@@ -19,6 +19,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each host in hosts}}
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td>{{host.name}}</td>
+                            <td>
+                                <div class="progress progress-striped" style="margin-bottom: 0;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{host.boot_status}}</td>
+                            <td>
+                                <a href="javascript:void(null);">移除</a>
+                            </td>
+                        </tr>
+                        {{/each}}
                         <tr>
                             <td><input type="checkbox" /></td>
                             <td>192.168.1.166</td>

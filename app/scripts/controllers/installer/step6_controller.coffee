@@ -77,7 +77,9 @@ App.InstallerStep6Controller = Ember.Controller.extend
             'hosts': @get('host_ip_arr')
             'user': @get('ssh_user')
 
-        req_id = @get('controllers.installer').launch_boot(boot_data)
+        # TODO 暂时不向后台请求
+        # req_id = @get('controllers.installer').launch_boot(boot_data)
+        req_id = 1
         console.log '--------------->', typeof req_id
         
         if req_id == '0' || req_id == 0
