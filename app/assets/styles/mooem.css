@@ -99,3 +99,10 @@
   background: red;
   z-index: 9999;
 }
+
+
+
+/*=========================Bootstrap==========================*/
+.text-error {
+  color: #b94a48;
+}

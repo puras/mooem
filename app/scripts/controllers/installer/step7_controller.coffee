@@ -15,15 +15,13 @@ App.InstallerStep7Controller = Ember.Controller.extend
         hosts_info = @get('content.hosts')
         hosts = []
         console.log hosts_info['10.10.129.245'].name
-
-        ###
-        // hosts_info.forEach (host) ->
-        //     host_info = App.HostInfo.create
-        //         name: host.name
-        //         boot_status: host.boot_status
-        //         is_checked: false
-        //     hosts.pushObject(host)
-        ###
+        console.log hosts_info
+        for key, val of hosts_info
+            host_info = App.HostInfo.create
+                name: val.name
+                boot_status: val.boot_status
+                is_checked: true
+            hosts.pushObject host_info
         @set('hosts', hosts)
 
     actions:
@@ -31,3 +29,9 @@ App.InstallerStep7Controller = Ember.Controller.extend
             @get('controllers.installer').send('gotoStep6')
         next: ->
             @get('controllers.installer').send('gotoStep8')
+
+        host_log_popup: (host) ->
+            console.log host
+            console.log host.name
+            console.log 'host_log popup'
+            App.ModalPopup.show()
