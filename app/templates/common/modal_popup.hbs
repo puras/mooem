@@ -1,19 +1,44 @@
-<div class="modal-backdrop"></div>
-<!-- Modal -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
+
+<div class="modal" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+  <div class="modal-header">
+    {{#if showCloseButton}}
+      <a class="close" {{action onClose target="view"}}>x</a>
+    {{/if}}
+    <h3 id="modal-label">
+      {{#if headerClass}}
+        {{view headerClass}}
+      {{else}}
+        {{header}}
+      {{/if}}
+    </h3>
+  </div>
+  <div class="modal-body">
+    {{#if bodyClass}}
+      {{view bodyClass}}
+    {{else}}
+      {{#if encodeBody}}
+        {{body}}
+      {{else}}
+        {{{body}}}
+      {{/if}}
+    {{/if}}
+  </div>
+  {{#if showFooter}}
+    {{#if footerClass}}
+      {{view footerClass}}
+    {{else}}
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        {{#if view.hasFooterCheckbox}}
+          <label id="footer-checkbox">{{view Ember.Checkbox classNames="checkbox" checkedBinding="view.isNotShowBgChecked"}} &nbsp;
+          {{t app.settings.notShowBgOperations}}</label>
+        {{/if}}
+        {{#if view.secondary}}
+          <a class="btn" {{action onSecondary target="view"}}>{{view.secondary}}</a>
+        {{/if}}
+        {{#if view.primary}}
+          <a {{bindAttr class="view.enablePrimary::disabled :btn :btn-success"}} {{action onPrimary target="view"}}>{{view.primary}}</a>
+        {{/if}}
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    {{/if}}
+  {{/if}}
+</div>

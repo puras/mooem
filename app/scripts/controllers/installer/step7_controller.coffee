@@ -34,4 +34,6 @@ App.InstallerStep7Controller = Ember.Controller.extend
             console.log host
             console.log host.name
             console.log 'host_log popup'
-            App.ModalPopup.show()
+            App.ModalPopup.show
+                header: '111'
+                secondary: null
