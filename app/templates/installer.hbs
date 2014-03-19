@@ -3,8 +3,8 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <h3>{{t installer.header}}</h3>
             <ul class="nav nav-sidebar">
-                <li><a {{bind-attr class="isStep0:active"}} href="javascript:void(null);" {{action "gotoStep0" target="controller"}}>{{t installer.step0.header}}</a></li>
-                <li><a {{bind-attr class="isStep1:active"}} href="javascript:void(null);" {{action "gotoStep1" target="controller"}}>{{t installer.step1.header}}</a></li>
+                <li {{bind-attr class="isStep0:active"}}><a href="javascript:void(null);" {{action "gotoStep0" target="controller"}}>{{t installer.step0.header}}</a></li>
+                <li><a class="disabled" {{bind-attr class="isStep1:active"}} href="javascript:void(null);" {{action "gotoStep1" target="controller"}}>{{t installer.step1.header}}</a></li>
                 <li><a {{bind-attr class="isStep2:active"}} href="javascript:void(null);" {{action "gotoStep2" target="controller"}}>{{t installer.step2.header}}</a></li>
                 <li><a {{bind-attr class="isStep3:active"}} href="javascript:void(null);" {{action "gotoStep3" target="controller"}}>{{t installer.step3.header}}</a></li>
                 <li><a {{bind-attr class="isStep4:active"}} href="javascript:void(null);" {{action "gotoStep4" target="controller"}}>{{t installer.step4.header}}</a></li>

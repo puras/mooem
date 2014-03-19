@@ -9,20 +9,28 @@ urls =
                 async: false
                 data: data.boot_data
             }
+    'wizard.step7.boot':
+        'real': '/boot/{boot_req_id}'
+    'wizard.step7.is_hosts_registered':
+        'real': '/boot/hosts'
 
 format_url = (url, data) ->
     if !url then return null
     keys = url.match /\{\w+\}/g
+    console.log keys
     keys = if keys == null then [] else keys
     if keys
         keys.forEach (key)->
+            console.log key
             raw_key = key.substr 1, key.length - 2
-            replace
+            replace = null
+            console.log raw_key
             if !data || !data[raw_key]
                 replace = ''
             else
                 replace = data[raw_key]
             url = url.replace new RegExp(key, 'g'), replace
+            console.log url
     url
 format_req = (data) ->
     opt =
@@ -32,6 +40,7 @@ format_req = (data) ->
         statusCode: App.status_codes
 
     opt.url = App.api_prefix + format_url(this.real, data)
+    console.log opt.url
 
     if @format
         jQuery.extend(opt, @format(data, opt))
@@ -84,7 +93,8 @@ ajax = Ember.Object.extend
     default_error_handler: (jq_xhr, url, method, show_status) ->
         method = method || 'GET'
         self = @
-        api = ' received on ' + method ' method for API: ' + url
+        console.log method
+        api = ' received on ' + method + ' method for API: ' + url
         show_message = true
         try
             json = $.parseJSON jq_xhr.responseText
