@@ -1,18 +1,18 @@
 App.WizardController = Ember.Controller.extend
-    isStepDisabled: null
+    is_step_disabled: null
     boot_req_id: null
     init: ->
-        @set 'isStepDisabled', []
-        @get('isStepDisabled').pushObject(
+        @set 'is_step_disabled', []
+        @get('is_step_disabled').pushObject(
             Ember.Object.create
                 step: 1
                 value: false
         )
-        @get('isStepDisabled').pushObject(
+        @get('is_step_disabled').pushObject(
             Ember.Object.create
                 step: step
                 value: true
-        ) for step in [2..@get('totalSteps') ]
+        ) for step in [2..@get('total_steps') ]
 
     currentStep: (->
         console.log 'In currentStep function'
@@ -60,7 +60,12 @@ App.WizardController = Ember.Controller.extend
     ).property('currentStep')
 
     gotoStep: (step) ->
-        @transitionToRoute('/installer/step' + step)
+        if @get('is_step_disabled').findBy('step', step).get('value') isnt false
+            return
+        if @get('currentStep') - step > 1
+            console.log 'If you proceed to go back to Step ' + step + ', you will lose any changes you have made beyond this step'
+        else
+            @transitionToRoute('/installer/step' + step)
 
 
     clear_install_options: ->
@@ -90,6 +95,15 @@ App.WizardController = Ember.Controller.extend
     launch_boot_error_callback: ->
         console.log 'ERROR: POST bootstrap failed'
         alert 'Bootstrap call failed. Please try again.'
+
+    set_steps_enable: (->
+        console.log 'current--->', @get('currentStep')
+        for i in [1..@get('total_steps')]
+            step = @get('is_step_disabled').findBy 'step', i
+            flag = if i <= @get('currentStep') then false else true
+            console.log 'flag ====', flag
+            step.set('value', flag)
+    ).observes('currentStep')
 
     actions:
         gotoStep0: ->

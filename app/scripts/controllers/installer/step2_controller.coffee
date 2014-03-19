@@ -13,6 +13,8 @@ App.InstallerStep2Controller = Ember.Controller.extend
 
     actions:
         prev: ->
+            @get('controllers.installer').setCurrentStep(1, false)
             @get('controllers.installer').send('gotoStep1')
         next: ->
+            @get('controllers.installer').setCurrentStep(3, false)
             @get('controllers.installer').send('gotoStep3')

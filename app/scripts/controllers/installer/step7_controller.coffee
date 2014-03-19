@@ -153,8 +153,10 @@ App.InstallerStep7Controller = Ember.Controller.extend
 
     actions:
         prev: ->
+            @get('controllers.installer').setCurrentStep(6, false)
             @get('controllers.installer').send('gotoStep6')
         next: ->
+            @get('controllers.installer').setCurrentStep(8, false)
             @get('controllers.installer').send('gotoStep8')
 
         host_log_popup: (host) ->

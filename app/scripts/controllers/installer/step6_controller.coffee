@@ -63,6 +63,7 @@ App.InstallerStep6Controller = Ember.Controller.extend
         host_info
     save_hosts: ->
         @set('content.hosts', @get_host_info())
+        @get('controllers.installer').setCurrentStep(4, false)
         @get('controllers.installer').send('gotoStep7')
 
     proceed_next: (warning_confirmed) ->
@@ -91,6 +92,7 @@ App.InstallerStep6Controller = Ember.Controller.extend
 
     actions:
         prev: ->
+            @get('controllers.installer').setCurrentStep(5, false)
             @get('controllers.installer').send('gotoStep5')
         next: ->
             if @get('is_submit_disabled')
