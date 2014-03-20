@@ -44,11 +44,29 @@
                     <div class="form-group">
                         <label for="templateFile" class="col-sm-2 control-label">{{t common.file}}</label>
                         <div class="col-sm-10">
-                            <input type="file" id="templateFile" name="templateFile" />
+                            {{view App.TemplateFileUploader}}
+                            <a>
+                              <span class="fileinput-button">
+                                <i class="icon-upload icon-large"></i>
+                                <span>{{name}}</span>
+                                <input id="fileupload" type="file" name="file" multiple>
+                              </span>
+                            </a>
+
+                            <div class="fileupload-progress">
+                              正在上传... {{progress}}%
+                            </div>
+
+                            <div class="fileupload-error">
+                              {{errorMessage}}
+                            </div>
                         </div>
                     </div>
                 </form>
                 <hr />
+                <div id="template">
+                    
+                </div>
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>

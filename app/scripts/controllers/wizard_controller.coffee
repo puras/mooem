@@ -15,13 +15,10 @@ App.WizardController = Ember.Controller.extend
         ) for step in [2..@get('total_steps') ]
 
     currentStep: (->
-        console.log 'In currentStep function'
-        console.log App.db.getWizardCurrentStep(@get('name').substr(0, @get('name').length - 10))
         App.db.getWizardCurrentStep(@get('name').substr(0, @get('name').length - 10))
     ).property()
 
     setCurrentStep: (currentStep, completed) ->
-        console.log 'In Set currentStep function'
         App.db.setWizardCurrentStep(@get('name').substr(0, @get('name').length - 10), currentStep, completed)
         @set('currentStep', currentStep)
 
@@ -62,10 +59,13 @@ App.WizardController = Ember.Controller.extend
     gotoStep: (step) ->
         if @get('is_step_disabled').findBy('step', step).get('value') isnt false
             return
+        ###
         if @get('currentStep') - step > 1
             console.log 'If you proceed to go back to Step ' + step + ', you will lose any changes you have made beyond this step'
         else
             @transitionToRoute('/installer/step' + step)
+        ###
+        @transitionToRoute('/installer/step' + step)
 
 
     clear_install_options: ->
@@ -97,12 +97,9 @@ App.WizardController = Ember.Controller.extend
         alert 'Bootstrap call failed. Please try again.'
 
     set_steps_enable: (->
-        console.log 'current--->', @get('currentStep')
         for i in [1..@get('total_steps')]
             step = @get('is_step_disabled').findBy 'step', i
-            flag = if i <= @get('currentStep') then false else true
-            console.log 'flag ====', flag
-            step.set('value', flag)
+            step.set('value', if i <= @get('currentStep') then false else true)
     ).observes('currentStep')
 
     actions:

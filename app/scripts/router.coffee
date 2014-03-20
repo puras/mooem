@@ -1,4 +1,4 @@
-Ember.Router.map ->
+App.Router.map ->
     @resource 'installer', ->
         @route 'step0'
         @route 'step1'

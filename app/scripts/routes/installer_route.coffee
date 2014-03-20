@@ -4,4 +4,4 @@ App.InstallerIndexRoute = Ember.Route.extend
         currentStep = parseInt(controller.getInstallerCurrentStep(), 10)
         if isNaN(currentStep)
             currentStep = 0
-        @transitionTo('/installer/step' + currentStep)
+        @transitionTo '/installer/step' + currentStep
