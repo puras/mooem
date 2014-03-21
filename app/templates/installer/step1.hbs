@@ -11,9 +11,9 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <td>{{t resource.template.name}}</td>
-                            <td>{{t resource.template.description}}</td>
-                            <td>{{t common.operate}}</td>
+                            <th>{{t resource.template.name}}</th>
+                            <th>{{t resource.template.description}}</th>
+                            <th>{{t common.operate}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,56 +38,9 @@
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">导入模板文件</div>
+            <div class="panel-heading">上传模板 <a href="javascript:void(0);" onclick="$(this).parent().next().toggle('slow');">显示/隐藏</a></div>
             <div class="panel-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label for="templateFile" class="col-sm-2 control-label">{{t common.file}}</label>
-                        <div class="col-sm-10">
-                            {{view App.TemplateFileUploader}}
-                            <a>
-                              <span class="fileinput-button">
-                                <i class="icon-upload icon-large"></i>
-                                <span>{{name}}</span>
-                                <input id="fileupload" type="file" name="file" multiple>
-                              </span>
-                            </a>
-
-                            <div class="fileupload-progress">
-                              正在上传... {{progress}}%
-                            </div>
-
-                            <div class="fileupload-error">
-                              {{errorMessage}}
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <hr />
-                <div id="template">
-                    
-                </div>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <td>{{t resource.template.name}}</td>
-                            <td>{{t resource.template.description}}</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>HP Server</td>
-                            <td>HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器</td>
-                        </tr>
-                        <tr>
-                            <td>HP Server</td>
-                            <td>HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="panel-footer">
-                <button class="btn btn-default" onclick="$('.btn-primary').removeAttr('disabled');">增加</button>
+                {{view App.FileUploader}}
             </div>
         </div>
     </div>

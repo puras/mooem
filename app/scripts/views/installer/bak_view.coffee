@@ -1,6 +1,22 @@
-App.InstallerStep1View = App.InstallerStepView.extend()
+App.InstallerStep1View1 = App.InstallerStepView.extend()
 
-App.FileUploader = Ember.View.extend
+App.TemplateFileUploader = Ember.View.extend
+    template: Ember.Handlebars.compile('<input type="file" />')
+    change: (e) ->
+        console.log 'fileuploader'
+        console.log e.target
+        self = @
+        if e.target.files && e.target.files.length == 1
+            file = e.target.files[0]
+            reader = new FileReader()
+            reader.onload = ((theFile) ->
+                (e) ->
+                    console.log e.target.result
+                    $('#template').html e.target.result
+            )(file)
+            reader.readAsText(file)
+
+App.FileUploader1 = Ember.View.extend
     templateName: 'common/file_upload'
     didInsertElement: ->
         upload = $('<button/>').addClass('btn btn-primary').prop('disabled', true).text('processing...').on 'click', ->
@@ -13,12 +29,6 @@ App.FileUploader = Ember.View.extend
                     data.abort()
             data.submit().always ->
                 $this.remove()
-
-        $('#uploadsubmit').on 'click', ->
-            $this = $(this)
-            data = $this.data()
-            console.log data
-            return false
 
         $('#fileupload').fileupload
             url: '/octopus/api/v1/boot/upload'
@@ -41,6 +51,10 @@ App.FileUploader = Ember.View.extend
                 node.appendTo data.context
             console.log data.context
             console.log data.context.find('button')
+            btn = $('#uploadsubmit')
+            btn.off 'click'
+                .on 'click', ->
+                    data.submit()
         .on 'fileuploadprocessalways', (e, data) ->
             console.log 'fileuploadprocessalways'
             console.log data
