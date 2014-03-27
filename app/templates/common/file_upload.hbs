@@ -1,19 +1,22 @@
 
 <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Add files...</span>
-        <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="files" multiple>
-    </span>
-    <br>
-        <button id="uploadsubmit" class="btn btn-primary start">
-            <i class="glyphicon glyphicon-upload"></i>
-            <span>Start upload</span>
-        </button>
-    <br>
-    <!-- The global progress bar -->
-    <div id="progress" class="progress">
-        <div class="progress-bar progress-bar-success"></div>
-    </div>
-    <!-- The container for the uploaded files -->
-    <div id="files" class="files"></div>
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>增加文件...</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <input id="fileupload" type="file" name="file" multiple>
+</span>
+<button class="btn btn-primary start">
+    <i class="glyphicon glyphicon-upload"></i>
+    <span>开始上传</span>
+</button>
+<button class="btn btn-warning cancel">
+    <i class="glyphicon glyphicon-ban-circle"></i>
+    <span>重置</span>
+</button>
+<br /><br />
+<!-- The global progress bar -->
+<div id="progress" class="progress">
+    <div class="progress-bar progress-bar-success"></div>
+</div>
+<!-- The container for the uploaded files -->
+<div id="files" class="files"></div>

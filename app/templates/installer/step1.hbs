@@ -1,51 +1,49 @@
 <div class="panel panel-default">
-    <div class="panel-heading">{{t installer.step1.header}}</div>
+    <div class="panel-heading">{{t installer.step6.header}}</div>
     <div class="panel-body">
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            至少导入一种模板!
+            指定要安装Agent的目标主机IP和密钥、账号信息!
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">模板列表 <a href="javascript:void(0);" onclick="$(this).parent().next().toggle('slow');">显示/隐藏</a></div>
             <div class="panel-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>{{t resource.template.name}}</th>
-                            <th>{{t resource.template.description}}</th>
-                            <th>{{t common.operate}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>HP Server</td>
-                            <td>HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器</td>
-                            <td>
-                                <a href="javascript:void(null);">查看</a>
-                                <a href="javascript:void(null);">移除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>HP Server</td>
-                            <td>HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器HP服务器</td>
-                            <td>
-                                <a href="javascript:void(null);">查看</a>
-                                <a href="javascript:void(null);">移除</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">上传模板 <a href="javascript:void(0);" onclick="$(this).parent().next().toggle('slow');">显示/隐藏</a></div>
-            <div class="panel-body">
-                {{view App.FileUploader}}
+                <form role="form">
+                    <div class="form-group" {{bind-attr class="hosts_error:has-error"}}>
+                        <label for="resource_name" data-toggle="popover" data-original-title="目标主机" data-content="目标主机需已配置免密码登录，否则无法正常部署Agent应用。">目标主机IP列表</label>
+                        {{
+                            textarea class="form-control" rows="5"
+                            value=controllers.installer.content.install_options.host_ips
+                            placeholder="主机IP列表"
+                        }}
+                        {{#if hosts_error}}
+                            <span class="help-block">{{hosts_error}}</span>
+                        {{/if}}
+                    </div>
+                    <div class="form-group" {{bind-attr class="ssh_key_error:has-error"}}>
+                        <label for="resource_att1" data-toggle="popover" data-original-title="主机密钥" data-content="在配置免密码登录时，所生成的公密钥，以便能正常登录目标主机">主机密钥</label>
+                        {{view App.SSHKeyFileUploader}}
+                        {{
+                            textarea class="form-control" rows="3" id="ssh_key"
+                            value=content.install_options.ssh_key
+                            placeholder="SSH登录密钥"
+                        }}
+                        {{#if ssh_key_error}}
+                            <span class="help-block">{{ssh_key_error}}</span>
+                        {{/if}}
+                    </div>
+                    <div class="form-group" {{bind-attr class="ssh_user_error:has-error"}}>
+                        <label for="resource_att1" data-toggle="popover" data-original-title="登录账号" data-content="SSH登录目标主机时使用的账号，默认使用:root。">登录账号</label>
+                        {{input type="text" class="form-control" value=content.install_options.ssh_user}}
+                        {{#if ssh_user_error}}
+                            <span class="help-block">{{ssh_user_error}}</span>
+                        {{/if}}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <div class="panel-footer">
         <button class="btn btn-default" {{action 'prev'}}>{{t common.prev}}</button>
-        <button class="btn btn-primary" {{action 'next'}} disabled="disabled">{{t common.next}}</button>
+        <button class="btn btn-primary" {{bind-attr disabled="is_submit_disabled"}} {{action 'next'}}>{{t common.next}}</button>
     </div>
 </div>

@@ -1,10 +1,6 @@
-App.InstallerStep10Controller = Ember.Controller.extend
-    needs: ['installer']
+App.InstallerStep10Controller = App.StepController.extend
 
     actions:
-        prev: ->
-            @get('controllers.installer').setCurrentStep(9, false)
-            @get('controllers.installer').send('gotoStep9')
         finish: ->
             @get('controllers.installer').setCurrentStep(0)
             @transitionToRoute('index')

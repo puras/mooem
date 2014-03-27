@@ -1,59 +1,83 @@
 <div class="panel panel-default">
-    <div class="panel-heading">{{t installer.step7.header}}</div>
+    <div class="panel-heading">{{t installer.step4.header}}</div>
     <div class="panel-body">
-        <div class="alert alert-success alert-dismissable">
+        <div class="alert alert-success alert-dismissable"  data-toggle="popover" {{translateAttr data-original-title="installer.step2.header" data-content="installer.step2.hostPattern.tooltip.content"}}>
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            向目标主机安装Agent程序。
+            如使用默认域，可直接下一步。
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">主机列表</div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="$('#domain_list').hide();$('.btn-primary').removeAttr('disabled');">
+            使用默认域
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" onclick="$('#domain_list').show();$('.btn-primary').attr('disabled', 'disabled');">
+            自定义域
+          </label>
+        </div>
+        <div id="domain_list" class="panel panel-default" style="display: none;">
+            <div class="panel-heading">域列表 <a href="javascript:void(0)" onclick="$('#domain_add_form').show();">增加</a></div>
             <div class="panel-body">
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <td class="col-md-1">{{view Ember.Checkbox checkedBinding="allChecked"}}</td>
-                            <td class="col-md-3">主机</td>
-                            <td class="col-md-4">进度</td>
-                            <td class="col-md-2">状态</td>
-                            <td class="col-md-2">{{t common.operate}}</td>
+                            <td>域名称</td>
+                            <td>资源成员</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each host in hosts}}
-
-                        {{#view App.WizardHostView host_infoBinding="host"}}
-                            <td>{{view Ember.Checkbox checkedBinding="host.is_checked"}}</td>
-                            <td>{{host.name}}</td>
+                        <tr>
+                            <td>域1</td>
                             <td>
-                                <div {{bind-attr class=":progress host.is_boot_done::progress-striped host.is_boot_done::active"}} style="margin-bottom: 0;">
-                                    <div {{bind-attr class=":progress-bar host.boot_bar_color"}} style="width: 100%">
-                                    </div>
-                                </div>
+                                <p>资源1</p>
+                                <p>资源2</p>
                             </td>
+                        </tr>
+                        <tr>
+                            <td>域2</td>
                             <td>
-                                <a href="javascript:void(0)" data-toggle="modal" {{action "host_log_popup" host target="controller"}}>
-                                    <span {{bind-attr class="host.boot_status_color"}}>{{host.boot_status_for_display}}</span>
-                                </a>
+                                <p>资源3</p>
+                                <p>资源4</p>
                             </td>
-                            <td>
-                                {{#if view.removable}}
-                                    <a href="javascript:void(0)" class="btn btn-mini" {{action remove target="view"}}><i class="glyphicon glyphicon-trash"></i></a>
-                                {{/if}}
-                                {{#if view.retryable}}
-                                    <a href="javascript:void(0)" class="btn btn-mini" {{action retry target="view"}}><i class="glyphicon glyphicon-repeat"></i></a>
-                                {{/if}}
-                            </td>
-                        {{/view}}
-                            
-                        {{/each}}
+                        </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div id="domain_add_form" class="panel panel-default" style="display: none;">
+            <div class="panel-heading">域信息</div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="resource_name" class="col-sm-2 control-label">域名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="resource_name" name="resource_name" class="form-control" placeholder="资源名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource_att1" class="col-sm-2 control-label">域描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="resource_att1" name="resource_att1" class="form-control" placeholder="属性1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resource_att2" class="col-sm-2 control-label">资源成员</label>
+                        <div class="col-sm-10">
+                            <select multiple class="form-control">
+                              <option>资源1</option>
+                              <option>资源2</option>
+                              <option>资源3</option>
+                              <option>资源4</option>
+                              <option>资源5</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="panel-footer">
-                <div class="row">
-                    <button class="btn btn-default">删除选中项</button>
-                    <button class="btn btn-default">重试失败项</button>
-                </div>
+                <button class="btn btn-default" onclick="$('.btn-primary').removeAttr('disabled');$('#domain_add_form').hide()">增加</button>
             </div>
         </div>
     </div>

@@ -3,6 +3,10 @@ App = window.App = Ember.Application.create
     LOG_VIEW_LOOKUPS: true
     rootElement: '#wrapper'
 
+App.ApplicationAdapter = DS.RESTAdapter.extend
+    host: '/octopus'
+    namespace: 'api/v1'
+
 require('scripts/messages')
 require('scripts/config')
 require('scripts/status_codes')
@@ -12,6 +16,7 @@ require('scripts/db')
 require('scripts/controllers/application_controller')
 require('scripts/controllers/wizard_controller')
 require('scripts/controllers/installer_controller')
+require('scripts/controllers/installer/step_controller')
 require('scripts/controllers/**/*')
 require('scripts/routes/*')
 require('scripts/models/*')

@@ -68,6 +68,20 @@ App.WizardController = Ember.Controller.extend
         @transitionToRoute('/installer/step' + step)
 
 
+    # 根据Controller名称判断当前的step
+    get_step: (controller) ->
+        name = controller.toString()
+        ids = name.match /\d+/g
+        if ids.length > 0 then ids[0] else 0
+    # 计算上一步步数
+    prev_step: (step) ->
+        step = parseInt(step, 10)
+        if step - 1 < 0 then 0 else step - 1
+    # 计算下一步步数
+    next_step: (step) ->
+        step = parseInt(step, 10)
+        if step + 1 > @get('total_steps') then @get('total_steps') else step + 1
+
     clear_install_options: ->
         install_options = jQuery.extend({}, @get('install_options_template'))
         @set('content.install_options', install_options)
