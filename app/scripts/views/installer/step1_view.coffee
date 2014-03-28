@@ -1,4 +1,4 @@
-App.InstallerStep6View = App.InstallerStepView.extend
+App.InstallerStep1View = App.InstallerStepView.extend
     didInsertElement: ->
         @_super()
         #@set('controller.hosts_error', null)

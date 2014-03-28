@@ -1,0 +1,1 @@
+App.InstallerStep8Route = App.StepRoute.extend()
