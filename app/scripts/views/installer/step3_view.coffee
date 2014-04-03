@@ -2,6 +2,15 @@ App.InstallerStep1View = App.InstallerStepView.extend
     didInsertElement: ->
         # @get('controller').load_template()
 
+App.RemoveTemplateView = Ember.View.extend
+    templateName: 'installer/step3_remove_template'
+    tagName: 'span'
+    temp: null
+    click: (event) ->
+        if confirm('确认删除?')
+            console.log @get 'temp'
+            @get('controller').send 'remove_template', @get 'temp'
+
 App.FileUploader = Ember.View.extend
     templateName: 'common/file_upload'
     didInsertElement: ->
@@ -78,12 +87,19 @@ App.FileUploader = Ember.View.extend
             progress = parseInt(data.loaded / data.total * 100, 10)
             $('#progress .progress-bar').css 'width', progress + '%'
         .on 'fileuploaddone', (e, data) ->
-            $.each data.files, (idx, file) ->
-                error = $('<span class="text-success"/>').text 'File upload Success.'
-                $(data.context.children()[idx])
+            if data.result.files and data.result.files.length == 0 and data.result.error
+                error = $('<span class="text-danger"/>').text 'File upload Failed.' + data.result.error
+                $(data.context.children()[0])
                     .append '<br>'
                     .append error
-            self.get('controller').send 'add_templates'
+            else
+                $.each data.result.files, (idx, file) ->
+                    console.log file
+                    info = $('<span class="text-success"/>').text 'File upload Success.'
+                    $(data.context.children()[idx])
+                        .append '<br>'
+                        .append info
+                self.get('controller').send 'load_templates'
         .on 'fileuploadfail', (e, data) ->
             $.each data.files, (idx, file) ->
                 error = $('<span class="text-danger"/>').text 'File upload failed.'

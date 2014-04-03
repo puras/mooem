@@ -23,7 +23,7 @@
                             <td>{{template.description}}</td>
                             <td>
                                 <a href="javascript:void(null);">查看</a>
-                                <a href="javascript:void(null);">移除</a>
+                                {{view App.RemoveTemplateView tempBinding='template'}}
                             </td>
                         </tr>
                         {{/each}}
@@ -40,7 +40,6 @@
     </div>
     <div class="panel-footer">
         <button class="btn btn-default" {{action 'prev'}}>{{t common.prev}}</button>
-        <button class="btn btn-primary" {{action 'next'}} disabled="disabled">{{t common.next}}</button>
-        <button class="btn btn-primary" {{action 'next'}}>{{t common.next}}</button>
+        <button class="btn btn-primary" {{action 'next'}} {{bind-attr disabled="is_submit_disabled"}}>{{t common.next}}</button>
     </div>
 </div>
