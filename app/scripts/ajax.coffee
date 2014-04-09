@@ -13,6 +13,9 @@ urls =
         'real': '/boot/{boot_req_id}'
     'wizard.step7.is_hosts_registered':
         'real': '/boot/hosts'
+    'wizard.step3.load_template_children':
+        'real': '/templates/{pid}/children'
+        'type': 'POST'
 
 format_url = (url, data) ->
     if !url then return null

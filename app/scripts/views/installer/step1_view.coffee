@@ -1,6 +1,7 @@
 App.InstallerStep1View = App.InstallerStepView.extend
     didInsertElement: ->
         @_super()
+        console.log 'didInsertElement InstallerStep1View'
         #@set('controller.hosts_error', null)
         #@set('controller.ssh_key_error', null)
 

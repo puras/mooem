@@ -1,8 +1,22 @@
-App.InstallerStep1View = App.InstallerStepView.extend
-    didInsertElement: ->
-        # @get('controller').load_template()
+App.InstallerStep3View = App.InstallerStepView.extend()
 
-App.RemoveTemplateView = Ember.View.extend
+App.Step3ChildContainerView = Ember.ContainerView.extend
+    temp: null
+    tagName: 'tr'
+    init: ->
+        @set 'elementId', 'child_template_' + @get('temp').id
+
+App.Step3ChildTemplateView = Ember.View.extend
+    templateName: 'installer/step3_child_template'
+    tagName: 'td'
+    parentTemp: null
+    temps: null
+
+App.Step3TemplateDetailView = Ember.View.extend
+    templateName: 'installer/step3_template_detail'
+    temp: null
+
+App.Step3RemoveTemplateView = Ember.View.extend
     templateName: 'installer/step3_remove_template'
     tagName: 'span'
     temp: null

@@ -1,0 +1,13 @@
+<tbody>
+                        {{#each template in templates}}
+                        <tr>
+                            <td>{{template.name}}</td>
+                            <td>{{template.description}}</td>
+                            <td>
+                                <a href="javascript:void(null);" {{action 'show_template' template}}>查看</a>
+                                <a href="javascript:void(null);" {{action 'show_child' template}}>子模板</a>
+                                {{view App.Step3RemoveTemplateView tempBinding='template'}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>

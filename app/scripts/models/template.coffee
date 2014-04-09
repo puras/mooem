@@ -1,3 +1,19 @@
 App.Template = DS.Model.extend
+    tid: DS.attr 'number'
+    pid: DS.attr 'number'
     name: DS.attr 'string'
     description: DS.attr 'string'
+    attributes: DS.hasMany 'attribute'
+attr = DS.attr
+App.Attribute = DS.Model.extend
+    tid: attr 'number'
+    name: attr 'string'
+    type: attr 'string'
+    settable: attr 'number'
+    required: attr 'number'
+    description: attr 'string'
+    logicalType: attr 'number'
+    defaultValue: attr 'string'
+    min: attr 'number'
+    max: attr 'number'
+    template: DS.belongsTo 'template'
