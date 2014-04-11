@@ -2,7 +2,7 @@ App.InstallerStep4Controller = App.StepController.extend
     templates: null
     template: null
     parent_template: null
-    show_config: true
+    show_config: false
     show_index_form: false
     show_plugin_form: false
     plugin_type: null
@@ -10,15 +10,63 @@ App.InstallerStep4Controller = App.StepController.extend
     index_list: null
     plugin_list: null
 
-    change_type: (->
-        console.log 'change type'
-    ).property('type')
+    plugins: null
+    plugin: null
+    plugin_index_list: null
+
+    pluginDidChange: (->
+        if @get 'plugin'
+            console.log @get 'plugin'
+            App.ajax.send
+                name: 'wizard.step4.load_plugin_index_list'
+                sender: this
+                data:
+                    pid: @get('plugin').id
+                success: 'load_plugin_index_list_success'
+                error: 'load_plugin_index_list_error_callback'
+        else
+            @set 'plugin_index_list', null
+    ).observes('plugin')
+
+    monitors: null
+    monitor_plugin: null
+    monitor_pluginSelected: (->
+        console.log 'monitor_pluginSelected'
+    ).property('monitor_plugin')
+
+    load_plugin_index_list_success: (data) ->
+        # @set 'plugin_index_list', data.index_list
+        console.log '1'
+        pil = []
+        self = @
+        $.each data.index_list, (idx, index)->
+            pi = App.Index.create
+                id: index.id
+                pluginId: index.pluginId
+                kpi: index.kpi
+                name: index.name
+                alias: index.alias
+                inTemplate: self.indexIndexOfTemplate(index.pluginId, index.id) != -1
+            console.log pi
+            pil.pushObject pi
+        @set 'plugin_index_list', pil
+    load_plugin_index_list_error_callback: ->
+        console.log 'load_plugin_index_list_error_callback'
+
+    indexIndexOfTemplate: (pid, iid) ->
+        i = -1
+        if @get('index_list')
+            $.each @get('index_list'), (idx, index) ->
+                if index.id == iid and index.pluginId == pid
+                    i = idx
+                    return false
+        i
 
     is_collection: (->
         @set_form_disabled()
         flag = @get('plugin_type') != null and @get('plugin_type').toString() == '0'
         if flag
-            @set 'plugin_list', null
+            # @set 'plugin_list', null
             @load_index_list()
         flag
     ).property('plugin_type')
@@ -122,7 +170,7 @@ App.InstallerStep4Controller = App.StepController.extend
             @set 'plugin_type', data.templatePluginType.pluginType
             @set 'save_table', data.templatePluginType.saveTable
         else
-            @set 'plugin_type', 0
+            @set 'plugin_type', null
             @set 'save_table', null
     load_template_plugin_type_error_callback: ->
         console.log 'load_template_plugin_type_error_callback'
@@ -154,20 +202,45 @@ App.InstallerStep4Controller = App.StepController.extend
     load_plugin_list_error_callback: ->
         console.log 'load_plugin_list_error_callback'
 
-    load_plugin_by_type: (type)->
-        console.log 'type------------------->' + type
+    load_plugin_by_index: ->
         App.ajax.send
             name: 'wizard.step4.load_plugin_by_type'
             sender: this
             data:
-                type: type
-            success: 'load_plugin_by_type_success'
-            error: 'load_plugin_by_type_error_callback'
-    load_plugin_by_type_success: (data) ->
+                type: 0
+            success: 'load_plugin_by_index_success'
+            error: 'load_plugin_by_index_error_callback'
+    load_plugin_by_index_success: (data) ->
         @set 'plugins', data.plugins
         @set 'show_index_form', true
-    load_plugin_by_type_error_callback: ->
-        console.log 'load_plugin_by_type_error_callback'
+        @set 'plugin_index_list', []
+    load_plugin_by_index_error_callback: ->
+        console.log 'load_plugin_by_index_error_callback'
+
+    load_plugin_by_monitor: ->
+        App.ajax.send
+            name: 'wizard.step4.load_plugin_by_type'
+            sender: this
+            data:
+                type: 1
+            success: 'load_plugin_by_monitor_success'
+            error: 'load_plugin_by_monitor_error_callback'
+    load_plugin_by_monitor_success: (data)->
+        self = @
+        @set 'plugin_list', [] if @get('plugin_list') is null
+        @set 'monitors', []
+        @set 'monitor_plugin', []
+        $.each data.plugins, (idx, plugin) ->
+            console.log plugin
+            p = self.get('plugin_list').findProperty 'id', plugin.id
+            console.log p
+            console.log (not p)
+            if not p
+                self.get('monitors').pushObject plugin
+        # @set 'monitors', data.plugins
+        @set 'show_plugin_form', true
+    load_plugin_by_monitor_error_callback: ->
+        console.log 'load_plugin_by_monitor_error_callback'
     actions:
         show_config: (template) ->
             @set 'template', template
@@ -176,12 +249,40 @@ App.InstallerStep4Controller = App.StepController.extend
         save_config: ->
             console.log 'save config in controller'
         show_index_form: ->
-            @load_plugin_by_type(0)
-        save_index: ->
+            @load_plugin_by_index()
+        close_index_form: ->
             @set 'show_index_form', false
+        save_index: ->
+            self = @
+            $.each @get('plugin_index_list'), (idx, index) ->
+                if index.inTemplate
+                    isIn = self.indexIndexOfTemplate index.pluginId, index.id
+                    if isIn == -1
+                        if self.get('index_list') is null
+                            self.set('index_list', [])
+                        self.get('index_list').pushObject index
+        remove_index: (index) ->
+            tindex = @get('index_list').findProperty 'id', index.id
+            @get('index_list').removeObject tindex
+            self = @
+            $.each @get('plugin_index_list'), (idx, index) ->
+                index.set 'inTemplate', (self.indexIndexOfTemplate(index.pluginId, index.id) != -1)
         show_plugin_form: ->
-            @set 'show_plugin_form', true
+            @load_plugin_by_monitor()
         save_plugin: ->
+            console.log 'test'
+            self = @
+            console.log @get('monitor_plugin')
+            if @get('monitor_plugin')
+                @set 'plugin_list', [] if @get('plugin_list') is null
+                $.each @get('monitor_plugin'), (idx, plugin) ->
+                    p = self.get('plugin_list').findProperty 'id', plugin.id
+                    if not p
+                        self.get('plugin_list').pushObject plugin
+            @set 'show_plugin_form', false
+        remove_plugin: (plugin) ->
+            p = @get('plugin_list').findProperty 'id', plugin.id
+            @get('plugin_list').removeObject p
             @set 'show_plugin_form', false
         show_child: (template) ->
             @load_template_children template

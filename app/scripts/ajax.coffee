@@ -30,6 +30,8 @@ urls =
         'type': 'POST'
     'wizard.step4.load_plugin_by_type':
         'real': '/plugins/type/{type}'
+    'wizard.step4.load_plugin_index_list':
+        'real': '/plugins/{pid}/index_list'
 
 format_url = (url, data) ->
     if !url then return null

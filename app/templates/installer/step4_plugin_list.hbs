@@ -11,7 +11,7 @@
         <tr>
             <td><input type="checkbox" /></td>
             <td>{{plugin.name}}</td>
-            <td><a href="#">移除</a></td>
+            <td><a href="javascript:void(0)" {{action 'remove_plugin' plugin}}>移除</a></td>
         </tr>
         {{/each}}
     </tbody>

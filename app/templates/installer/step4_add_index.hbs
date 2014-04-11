@@ -6,11 +6,12 @@
                 <label for="inputEmail3" class="col-sm-2 control-label">插件</label>
                 <div class="col-sm-10">
                     {{view Ember.Select
-                       content=plugins
-                       optionValuePath="content.id"
-                       optionLabelPath="content.name"
-                       prompt="Pick a plugin:"
-                       class="form-control"}}
+                        content=plugins
+                        selectionBinding="plugin"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.name"
+                        prompt="Pick a plugin:"
+                        class="form-control"}}
                 </div>
             </div>
         </form>
@@ -27,7 +28,7 @@
         <tbody>
             {{#each index in plugin_index_list}}
             <tr>
-                <td><input type="checkbox" /></td>
+                <td>{{view Ember.Checkbox checkedBinding="index.inTemplate"}}{{index.inTemplate}}</td>
                 <td>{{index.kpi}}</td>
                 <td>{{index.name}}</td>
                 <td>{{index.alias}}</td>
@@ -37,5 +38,6 @@
     </table>
     <div class="panel-footer">
         <button class="btn btn-default" {{action 'save_index'}}>保存指标</button>
+        <button class="btn btn-default" {{action 'close_index_form'}}>关闭</button>
     </div>
 </div>
