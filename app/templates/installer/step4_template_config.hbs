@@ -5,17 +5,17 @@
             <div class="panel-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">插件类型{{plugin_type}}</label>
+                        <label class="col-sm-2 control-label">插件类型</label>
                         <div class="col-sm-10">
                             <div class="radio-inline">
                                 <label class="radio-label">
-                                    {{view Ember.RadioButton name="plugin_type" selectionBinding="plugin_type" value="collection"}}
+                                    {{view Ember.RadioButton name="plugin_type" selectionBinding="plugin_type" value="0"}}
                                     采集
                                 </label>
                             </div>
                             <div class="radio-inline">
                                 <label class="radio-label">
-                                    {{view Ember.RadioButton name="plugin_type" selectionBinding="plugin_type" value="monitor"}}
+                                    {{view Ember.RadioButton name="plugin_type" selectionBinding="plugin_type" value="1"}}
                                     监控
                                 </label>
                             </div>
@@ -31,10 +31,10 @@
             {{/if}}
         </div>
         {{#if is_show_index_form}}
-            {{view App.Step4AddIndexView}}
+            {{view App.Step4AddIndexView pluginsBinging='plugins'}}
         {{/if}}
         {{#if is_show_plugin_form}}
-            {{view App.Step4AddPluginView}}
+            {{view App.Step4AddPluginView pluginsBinging='plugins'}}
         {{/if}}
     </div>
     <div class="panel-footer">

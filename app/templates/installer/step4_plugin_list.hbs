@@ -7,11 +7,13 @@
         </tr>
     </thead>
     <tbody>
+        {{#each plugin in plugin_list}}
         <tr>
             <td><input type="checkbox" /></td>
-            <td>a</td>
+            <td>{{plugin.name}}</td>
             <td><a href="#">移除</a></td>
         </tr>
+        {{/each}}
     </tbody>
 </table>
 <div class="panel-footer">

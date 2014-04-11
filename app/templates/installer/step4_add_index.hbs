@@ -5,13 +5,12 @@
             <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">插件</label>
                 <div class="col-sm-10">
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                    {{view Ember.Select
+                       content=plugins
+                       optionValuePath="content.id"
+                       optionLabelPath="content.name"
+                       prompt="Pick a plugin:"
+                       class="form-control"}}
                 </div>
             </div>
         </form>
@@ -21,15 +20,19 @@
             <tr>
                 <th width="5"></th>
                 <th>指标</th>
+                <th>名称</th>
                 <th>别名</th>
             </tr>
         </thead>
         <tbody>
+            {{#each index in plugin_index_list}}
             <tr>
                 <td><input type="checkbox" /></td>
-                <td>a</td>
-                <td>a</td>
+                <td>{{index.kpi}}</td>
+                <td>{{index.name}}</td>
+                <td>{{index.alias}}</td>
             </tr>
+            {{/each}}
         </tbody>
     </table>
     <div class="panel-footer">

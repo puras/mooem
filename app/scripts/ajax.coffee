@@ -16,6 +16,20 @@ urls =
     'wizard.step3.load_template_children':
         'real': '/templates/{pid}/children'
         'type': 'POST'
+    'wizard.step4.load_template_children':
+        'real': '/templates/{pid}/children'
+        'type': 'POST'
+    'wizard.step4.load_template_plugin_type':
+        'real': '/templates/{tid}/plugin_type'
+        'type': 'POST'
+    'wizard.step4.load_index_list':
+        'real': '/templates/{tid}/index_list'
+        'type': 'POST'
+    'wizard.step4.load_plugin_list':
+        'real': '/templates/{tid}/plugin_list'
+        'type': 'POST'
+    'wizard.step4.load_plugin_by_type':
+        'real': '/plugins/type/{type}'
 
 format_url = (url, data) ->
     if !url then return null
@@ -28,7 +42,10 @@ format_url = (url, data) ->
             raw_key = key.substr 1, key.length - 2
             replace = null
             console.log raw_key
-            if !data || !data[raw_key]
+            console.log 'value->' + data[raw_key]
+            console.log (data[raw_key] == undefined or data[raw_key] == null)
+            # if !data || !data[raw_key]
+            if !data || (data[raw_key] == undefined or data[raw_key] == null)
                 replace = ''
             else
                 replace = data[raw_key]

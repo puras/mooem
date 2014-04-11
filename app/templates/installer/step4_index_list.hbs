@@ -9,13 +9,15 @@
         </tr>
     </thead>
     <tbody>
+        {{#each index in index_list}}
         <tr>
             <td><input type="checkbox" /></td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
+            <td>index.pluginName</td>
+            <td>index.kpi</td>
+            <td>index.alias</td>
             <td><a href="#">移除</a></td>
         </tr>
+        {{/each}}
     </tbody>
 </table>
 <div class="panel-footer">

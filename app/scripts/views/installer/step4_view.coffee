@@ -18,6 +18,9 @@ App.Step4TemplateConfigView = Ember.View.extend
     actions:
         save_config: ->
             console.log 'save_config'
+        
+        click: ->
+            console.log 'clickclick'
 
 App.Step4IndexListView = Ember.View.extend
     templateName: 'installer/step4_index_list'

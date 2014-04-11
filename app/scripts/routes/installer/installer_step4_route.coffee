@@ -6,4 +6,4 @@ App.InstallerStep4Route = App.StepRoute.extend
                 item.get('pid') == 0
     setupController: (controller, model) -> 
         controller.set 'templates', model
-        controller.set 'plugin_type', 'collection'
+        # controller.set 'plugin_type', 'collection'

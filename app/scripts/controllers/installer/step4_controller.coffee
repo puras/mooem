@@ -6,18 +6,34 @@ App.InstallerStep4Controller = App.StepController.extend
     show_index_form: false
     show_plugin_form: false
     plugin_type: null
+    save_table: null
+    index_list: null
+    plugin_list: null
+
+    change_type: (->
+        console.log 'change type'
+    ).property('type')
 
     is_collection: (->
         @set_form_disabled()
-        @get('plugin_type') == 'collection'
+        flag = @get('plugin_type') != null and @get('plugin_type').toString() == '0'
+        if flag
+            @set 'plugin_list', null
+            @load_index_list()
+        flag
     ).property('plugin_type')
 
     is_monitor: (->
         @set_form_disabled()
-        @get('plugin_type') == 'monitor'
+        flag = @get('plugin_type') != null and @get('plugin_type').toString() == '1'
+        if flag
+            @set 'index_list', null
+            @load_plugin_list()
+        flag
     ).property('plugin_type')
 
     is_show_index_form: (->
+        console.log 'test'
         @get('is_collection') and @get 'show_index_form'
     ).property('plugin_type', 'show_index_form')
 
@@ -30,7 +46,7 @@ App.InstallerStep4Controller = App.StepController.extend
         @set 'show_plugin_form', false
 
     has_parent: (parent) ->
-        if parent != null and (parent.toString().indexOf('Step3ChildContainerView') != -1 or parent.toString().indexOf('Step3ChildTemplateView') != -1)
+        if parent != null and (parent.toString().indexOf('Step4ChildContainerView') != -1 or parent.toString().indexOf('Step4ChildTemplateView') != -1)
             true
         else
             false
@@ -45,7 +61,7 @@ App.InstallerStep4Controller = App.StepController.extend
     load_template_children: (template) ->
         @set 'parent_template', template
         App.ajax.send
-            name: 'wizard.step3.load_template_children'
+            name: 'wizard.step4.load_template_children'
             sender: this
             data:
                 pid: template.id
@@ -85,7 +101,7 @@ App.InstallerStep4Controller = App.StepController.extend
             if !con.flag
                 con.target.removeAllChildren()
                 $('#' + con.target.elementId).empty()
-        child = container.createChildView App.Step3ChildTemplateView
+        child = container.createChildView App.Step4ChildTemplateView
         child.set 'parentTemp', template
         child.set 'temps', data.templates
         container.pushObject child
@@ -93,14 +109,74 @@ App.InstallerStep4Controller = App.StepController.extend
     load_child_templates_error_callback: ->
         console.log 'load_child_templates_error_callback' 
 
+    load_plugin_type: (template) ->
+        App.ajax.send
+            name: 'wizard.step4.load_template_plugin_type'
+            sender: this
+            data:
+                tid: template.id
+            success: 'load_template_plugin_type_success'
+            error: 'load_template_plugin_type_error_callback'
+    load_template_plugin_type_success: (data) ->
+        if data.templatePluginType
+            @set 'plugin_type', data.templatePluginType.pluginType
+            @set 'save_table', data.templatePluginType.saveTable
+        else
+            @set 'plugin_type', 0
+            @set 'save_table', null
+    load_template_plugin_type_error_callback: ->
+        console.log 'load_template_plugin_type_error_callback'
+
+    load_index_list: ->
+        tid = @get('template').id
+        App.ajax.send
+            name: 'wizard.step4.load_index_list'
+            sender: this
+            data:
+                tid: tid
+            success: 'load_index_list_success'
+            error: 'load_index_list_error_callback'
+    load_index_list_success: (data) ->
+        @set 'index_list', data.index_list
+    load_index_list_error_callback: ->
+        console.log 'load_index_list_error_callback'
+    load_plugin_list: ->
+        tid = @get('template').id
+        App.ajax.send
+            name: 'wizard.step4.load_plugin_list'
+            sender: this
+            data:
+                tid: tid
+            success: 'load_plugin_list_success'
+            error: 'load_plugin_list_error_callback'
+    load_plugin_list_success: (data)->
+        @set 'plugin_list', data.plugin_list
+    load_plugin_list_error_callback: ->
+        console.log 'load_plugin_list_error_callback'
+
+    load_plugin_by_type: (type)->
+        console.log 'type------------------->' + type
+        App.ajax.send
+            name: 'wizard.step4.load_plugin_by_type'
+            sender: this
+            data:
+                type: type
+            success: 'load_plugin_by_type_success'
+            error: 'load_plugin_by_type_error_callback'
+    load_plugin_by_type_success: (data) ->
+        @set 'plugins', data.plugins
+        @set 'show_index_form', true
+    load_plugin_by_type_error_callback: ->
+        console.log 'load_plugin_by_type_error_callback'
     actions:
         show_config: (template) ->
             @set 'template', template
+            @load_plugin_type template
             @set 'show_config', true
         save_config: ->
             console.log 'save config in controller'
         show_index_form: ->
-            @set 'show_index_form', true
+            @load_plugin_by_type(0)
         save_index: ->
             @set 'show_index_form', false
         show_plugin_form: ->
@@ -109,3 +185,5 @@ App.InstallerStep4Controller = App.StepController.extend
             @set 'show_plugin_form', false
         show_child: (template) ->
             @load_template_children template
+        click: ->
+            console.log 'clickclick'
