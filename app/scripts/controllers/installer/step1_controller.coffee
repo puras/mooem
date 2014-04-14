@@ -79,21 +79,21 @@ App.InstallerStep1Controller = App.StepController.extend
             @set('content.install_options.req_id', req_id)
             @save_hosts()
 
-    # actions:
-        # next: ->
-        #     if @get('is_submit_disabled')
-        #         return false
-        #     @set('has_submitted', true)
+    actions:
+        next: ->
+            # if @get('is_submit_disabled')
+            #     return false
+            # @set('has_submitted', true)
 
-        #     @check_host_error()
-        #     if (@get('hosts_error') || @get('ssh_key_error') || @get('ssh_user_error'))
-        #         return false
+            # @check_host_error()
+            # if (@get('hosts_error') || @get('ssh_key_error') || @get('ssh_user_error'))
+            #     return false
 
-        #     @update_host_ip_arr()
-        #     if !@host_ip_arr.length
-        #         @set('hosts_error', 'installer.step2.hostName.error.already_installed')
-        #         console.log 3
-        #         return false
+            # @update_host_ip_arr()
+            # if !@host_ip_arr.length
+            #     @set('hosts_error', 'installer.step2.hostName.error.already_installed')
+            #     console.log 3
+            #     return false
 
-        #     @proceed_next()
-        #     @_super()
+            # @proceed_next()
+            @_super()

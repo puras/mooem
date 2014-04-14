@@ -65,8 +65,8 @@ App.InstallerStep4Controller = App.StepController.extend
     is_collection: (->
         @set_form_disabled()
         flag = @get('plugin_type') != null and @get('plugin_type').toString() == '0'
-        if flag
-            # @set 'plugin_list', null
+        if flag and @get('template').get('plugin_type') != null and @get('template').get('plugin_type').toString() == @get('plugin_type').toString()
+            @set 'plugin_list', null
             @load_index_list()
         flag
     ).property('plugin_type')
@@ -74,7 +74,7 @@ App.InstallerStep4Controller = App.StepController.extend
     is_monitor: (->
         @set_form_disabled()
         flag = @get('plugin_type') != null and @get('plugin_type').toString() == '1'
-        if flag
+        if flag and @get('template').get('plugin_type') != null and @get('template').get('plugin_type').toString() == @get('plugin_type').toString()
             @set 'index_list', null
             @load_plugin_list()
         flag
@@ -169,6 +169,7 @@ App.InstallerStep4Controller = App.StepController.extend
         if data.templatePluginType
             @set 'plugin_type', data.templatePluginType.pluginType
             @set 'save_table', data.templatePluginType.saveTable
+            @get('template').set 'plugin_type', data.templatePluginType.pluginType
         else
             @set 'plugin_type', null
             @set 'save_table', null
@@ -241,13 +242,58 @@ App.InstallerStep4Controller = App.StepController.extend
         @set 'show_plugin_form', true
     load_plugin_by_monitor_error_callback: ->
         console.log 'load_plugin_by_monitor_error_callback'
+
+    save_template_config: ->
+        console.log 'save_template_config'
+        t = @get 'template'
+        plugin_type = @get 'plugin_type'
+        index_list = @get 'index_list'
+        plugin_list = @get 'plugin_list'
+        console.log plugin_type
+        if plugin_type.toString() == '0'
+            req_data = 
+                tid: t.id
+                pluginType: plugin_type
+                indexList: index_list
+            console.log index_list
+            App.ajax.send
+                name: 'wizard.step4.save_template_index_config'
+                sender: this
+                data:
+                    'tid': t.id
+                    'req_data': req_data
+                success: 'save_template_config_success'
+                error: 'save_template_config_error_callback'
+        else if plugin_type.toString() == '1'
+            console.log 'templatePluginType'
+            req_data = 
+                tid: t.id
+                pluginType: plugin_type
+                pluginList: plugin_list
+            App.ajax.send
+                name: 'wizard.step4.save_template_plugin_config'
+                sender: this
+                data:
+                    'tid': t.id
+                    'req_data': req_data
+                success: 'save_template_config_success'
+                error: 'save_template_config_error_callback'
+    save_template_config_success: (data) ->
+        if data.info is 'SUCCESS'
+            alert '保存成功'
+        else
+            alert '保存失败:' + data.error_message
+    save_template_config_error_callback: ->
+        console.log 'save_template_config_error_callback'
     actions:
         show_config: (template) ->
             @set 'template', template
             @load_plugin_type template
             @set 'show_config', true
+        close_config: ->
+            @set 'show_config', false
         save_config: ->
-            console.log 'save config in controller'
+            @save_template_config()
         show_index_form: ->
             @load_plugin_by_index()
         close_index_form: ->
@@ -269,6 +315,8 @@ App.InstallerStep4Controller = App.StepController.extend
                 index.set 'inTemplate', (self.indexIndexOfTemplate(index.pluginId, index.id) != -1)
         show_plugin_form: ->
             @load_plugin_by_monitor()
+        close_plugin_form: ->
+            @set 'show_plugin_form', false
         save_plugin: ->
             console.log 'test'
             self = @

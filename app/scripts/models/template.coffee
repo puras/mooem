@@ -3,6 +3,7 @@ App.Template = DS.Model.extend
     tid: DS.attr 'number'
     pid: DS.attr 'number'
     name: DS.attr 'string'
+    plugin_type: attr 'number'
     description: DS.attr 'string'
     attributes: DS.hasMany 'attribute'
 App.Attribute = DS.Model.extend

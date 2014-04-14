@@ -32,6 +32,26 @@ urls =
         'real': '/plugins/type/{type}'
     'wizard.step4.load_plugin_index_list':
         'real': '/plugins/{pid}/index_list'
+    'wizard.step4.save_template_index_config':
+        'real': '/templates/{tid}/save_index_config'
+        'type': 'POST'
+        'format': (data) ->
+            return {
+                contentType: "application/json; charset=utf-8"
+                data: JSON.stringify data.req_data
+            }
+    'wizard.step4.save_template_plugin_config':
+        'real': '/templates/{tid}/save_plugin_config'
+        'type': 'POST'
+        'format': (data) ->
+            console.log '=============================', data
+            return {
+                contentType: "application/json; charset=utf-8"
+                data: JSON.stringify data.req_data
+                # data: data.req_data
+            }
+
+
 
 format_url = (url, data) ->
     if !url then return null
@@ -55,6 +75,7 @@ format_url = (url, data) ->
             console.log url
     url
 format_req = (data) ->
+    console.log '00000000000000000000', data
     opt =
         type: this.type || 'GET'
         timeout: App.timeout
@@ -64,9 +85,9 @@ format_req = (data) ->
     opt.url = App.api_prefix + format_url(this.real, data)
     console.log opt.url
 
+    console.log 'yyyyyyyyyyyyyyyyyyyyy' if @format
     if @format
         jQuery.extend(opt, @format(data, opt))
-
     opt
 
 ajax = Ember.Object.extend
