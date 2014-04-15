@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">关联Agent</div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Agent</label>
+                <div class="col-sm-10">
+                    {{view Ember.Select
+                        content=agents
+                        selectionBinding="agent"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.name"
+                        prompt="Pick a agent:"
+                        class="form-control"}}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-default" {{action 'save_resource'}}>保存</button>
+        <button class="btn btn-default" {{action 'close_index_form'}}>关闭</button>
+    </div>
+</div>

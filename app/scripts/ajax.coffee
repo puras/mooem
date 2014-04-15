@@ -50,6 +50,12 @@ urls =
                 data: JSON.stringify data.req_data
                 # data: data.req_data
             }
+    'wizard.step5.load_resource_children':
+        'real': '/resources/{pid}/children'
+        'type': 'POST'
+    'wizard.step5.load_template_attribute':
+        'real': '/templates/{tid}/attributes'
+        'type': 'POST'
 
 
 

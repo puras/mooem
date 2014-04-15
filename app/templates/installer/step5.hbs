@@ -5,81 +5,43 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             如使用默认集合，可直接下一步。
         </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="$('#domain_list').hide();$('.btn-primary').removeAttr('disabled');">
-            使用默认集合
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" onclick="$('#domain_list').show();$('.btn-primary').attr('disabled', 'disabled');">
-            自定义集合
-          </label>
-        </div>
-        <div id="domain_list" class="panel panel-default" style="display: none;">
-            <div class="panel-heading">集合列表 <a href="javascript:void(0)" onclick="$('#collection_add_form').show();">增加</a></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">资源列表<a href="javascript:void(0);" onclick="$(this).parent().next().toggle('slow');">显示/隐藏</a> <a href="javascript:void(0);" {{action 'show_resource_form'}}>创建资源</a></div>
             <div class="panel-body">
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <td>集合名称</td>
-                            <td>域成员</td>
+                            <th>名称</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {{#each resource in resources}}
                         <tr>
-                            <td>集合1</td>
+                            <td>主机1</td>
                             <td>
-                                <p>域1</p>
-                                <p>域2</p>
+                                <a href="javascript:void(0)" {{action 'show_child'}}>子资源</a>
+                                <a href="javascript:void(0)" {{action 'show_resource_form'}}>创建子资源</a>
+                                <a href="javascript:void(0)" {{action 'show_plugin_config'}}>配置Plugin</a>
+                                <a href="javascript:void(0)" {{action 'show_agent_config'}}>关联Agent</a>
+                                <a href="javascript:void(0)" {{action 'remove_resource'}}>移除</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>集合2</td>
-                            <td>
-                                <p>域3</p>
-                                <p>域4</p>
-                            </td>
-                        </tr>
+                        {{view App.Step5ChildContainerView resourceBinding='resource'}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
         </div>
-        <div id="collection_add_form" class="panel panel-default" style="display: none;">
-            <div class="panel-heading">集合信息</div>
-            <div class="panel-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label for="resource_name" class="col-sm-2 control-label">集合名称</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="resource_name" name="resource_name" class="form-control" placeholder="资源名称" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="resource_att1" class="col-sm-2 control-label">集合描述</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="resource_att1" name="resource_att1" class="form-control" placeholder="属性1" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="resource_att2" class="col-sm-2 control-label">域成员</label>
-                        <div class="col-sm-10">
-                            <select multiple class="form-control">
-                              <option>域1</option>
-                              <option>域2</option>
-                              <option>域3</option>
-                              <option>域4</option>
-                              <option>域5</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="panel-footer">
-                <button class="btn btn-default" onclick="$('.btn-primary').removeAttr('disabled');$('#collection_add_form').hide()">增加</button>
-            </div>
-        </div>
+        {{#if show_resource_form}}
+        {{view App.Step5ResourceFormView}}
+        {{/if}}
+        {{#if show_plugin_config}}
+        {{view App.Step5PluginConfigView}}
+        {{/if}}
+        {{#if show_agent_config}}
+        {{view App.Step5AgentConfigView}}
+        {{/if}}
     </div>
     <div class="panel-footer">
         <button class="btn btn-default" {{action 'prev'}}>{{t common.prev}}</button>

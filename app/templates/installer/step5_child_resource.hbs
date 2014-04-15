@@ -1,0 +1,33 @@
+<tr>
+    <td colspan="2">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>主机1</td>
+                    <td>
+                        <a href="javascript:void(0)" {{action 'show_child_resource'}}></a>
+                        <a href="javascript:void(0)" {{action 'show_resource_form'}}>创建子资源</a>
+                        <a href="javascript:void(0)" {{action 'show_plugin_config'}}>配置Plugin</a>
+                        <a href="javascript:void(0)" {{action 'show_agent_config'}}>关联Agent</a>
+                        <a href="javascript:void(0)" {{action 'remove_resource'}}>移除</a>
+                    </td>
+                </tr>
+                {{view App.Step5ChildContainerView resourceBinding='template'}}
+                <tr>
+                    <td>主机1</td>
+                    <td>移除</td>
+                </tr>
+                <tr>
+                    <td>主机1</td>
+                    <td>移除</td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
