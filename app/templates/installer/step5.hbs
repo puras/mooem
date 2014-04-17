@@ -18,13 +18,14 @@
                     <tbody>
                     {{#each resource in resources}}
                         <tr>
-                            <td>主机1</td>
+                            <td>{{resource.name}}</td>
+                            <td>{{resource.fullName}}</td>
                             <td>
-                                <a href="javascript:void(0)" {{action 'show_child'}}>子资源</a>
-                                <a href="javascript:void(0)" {{action 'show_resource_form'}}>创建子资源</a>
+                                <a href="javascript:void(0)" {{action 'show_child' resource}}>子资源</a>
+                                <a href="javascript:void(0)" {{action 'show_resource_form' resource}}>创建子资源</a>
                                 <a href="javascript:void(0)" {{action 'show_plugin_config'}}>配置Plugin</a>
                                 <a href="javascript:void(0)" {{action 'show_agent_config'}}>关联Agent</a>
-                                <a href="javascript:void(0)" {{action 'remove_resource'}}>移除</a>
+                                <a href="javascript:void(0)" {{action 'remove_resource' resource}}>移除</a>
                             </td>
                         </tr>
                         {{view App.Step5ChildContainerView resourceBinding='resource'}}

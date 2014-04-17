@@ -35,6 +35,20 @@ App.InstallerStep3Controller = App.StepController.extend
         template = @get 'parent_template'
         # container = Ember.View.views['child_template_' + template.get('id')]
         container = Ember.View.views['child_template_' + template.id]
+
+        views = container.get 'childViews'
+        flag = false
+        cview = null
+        views.forEach (view) ->
+            console.log view
+            if view.get('parentTemp').id == template.id
+                flag = true
+                cview = view
+        if flag
+            container.removeChild cview
+            $('#child_template_' + template.id).empty()
+            return
+            
         cons = Ember.View.views;
         arr = []
         for con_str of cons

@@ -94,6 +94,7 @@ App.InstallerStep4Controller = App.StepController.extend
         @set 'show_plugin_form', false
 
     has_parent: (parent) ->
+        console.log parent.toString()
         if parent != null and (parent.toString().indexOf('Step4ChildContainerView') != -1 or parent.toString().indexOf('Step4ChildTemplateView') != -1)
             true
         else
@@ -119,17 +120,35 @@ App.InstallerStep4Controller = App.StepController.extend
         template = @get 'parent_template'
         # container = Ember.View.views['child_template_' + template.get('id')]
         container = Ember.View.views['child_template_' + template.id]
+        views = container.get 'childViews'
+        flag = false
+        cview = null
+        views.forEach (view) ->
+            console.log view
+            if view.get('parentTemp').id == template.id
+                flag = true
+                cview = view
+        if flag
+            container.removeChild cview
+            $('#child_template_' + template.id).empty()
+            return
         cons = Ember.View.views;
+        console.log '1'
         arr = []
         for con_str of cons
+            console.log '2'
             if con_str.toString().indexOf('child_template_') == 0
+                console.log '3'
                 con = Ember.View.views[con_str]
                 if con == container
+                    console.log '4'
                     arr.push
                         target: con
                         flag: true
                     con_parent = con
+                    console.log @has_parent(con)
                     while @has_parent con_parent
+                        console.log '5'
                         con_parent = con_parent.get 'parentView'
                         if @child_index_of(arr, con_parent) != -1
                             idx = @child_index_of(arr, con_parent)

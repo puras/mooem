@@ -36,7 +36,7 @@ urls =
         'real': '/templates/{tid}/save_index_config'
         'type': 'POST'
         'format': (data) ->
-            return {
+            {
                 contentType: "application/json; charset=utf-8"
                 data: JSON.stringify data.req_data
             }
@@ -44,11 +44,9 @@ urls =
         'real': '/templates/{tid}/save_plugin_config'
         'type': 'POST'
         'format': (data) ->
-            console.log '=============================', data
-            return {
+            {
                 contentType: "application/json; charset=utf-8"
                 data: JSON.stringify data.req_data
-                # data: data.req_data
             }
     'wizard.step5.load_resource_children':
         'real': '/resources/{pid}/children'
@@ -56,6 +54,17 @@ urls =
     'wizard.step5.load_template_attribute':
         'real': '/templates/{tid}/attributes'
         'type': 'POST'
+    'wizard.step5.save_new_resource':
+        'real': '/resources'
+        'type': 'POST'
+        'format': (data) ->
+            {
+                contentType: 'application/json; charset=utf-8'
+                data: JSON.stringify data.req_data
+            }
+    'wizard.step5.remove_resource':
+        'real': '/resources/{rid}'
+        'type': 'DELETE'
 
 
 
