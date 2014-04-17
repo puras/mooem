@@ -203,6 +203,30 @@ App.InstallerStep5Controller = App.StepController.extend
         @set 'resource_desc', null
         @set 'attributes', []
         @set 'show_resource_form', false
+
+    load_agents: ->
+        App.ajax.send
+            name: 'wizard.step5.load_agents'
+            sender: @
+            success: 'load_agent_success'
+            error: 'load_agent_error_callback'
+    load_agent_success: (data) ->
+        agents = []
+        data.agents.forEach (agent) ->
+            agent.fullName = agent.address + ':' + agent.port
+            agents.push agent
+        @set 'agents', agents
+        @set 'show_agent_config', true
+    load_agent_error_callback: ->
+        console.log 'load_agent_error_callback'
+    save_agent_config_success: (data) ->
+        if data.info == 'SUCCESS'
+            alert '保存成功'
+            @close_all_form()
+        else
+            alert '保存失败：' + data.error_message
+    save_agent_config_error_callback: ->
+        console.log 'save_plugin_config_error_callback'
     actions:
         show_resource_form: (res)->
             @close_all_form()
@@ -233,16 +257,44 @@ App.InstallerStep5Controller = App.StepController.extend
                         'attributes': attrs
                 success: 'save_resource_success'
                 error: 'save_resource_error_callback'
-        show_plugin_config: ->
+        show_plugin_config: (res)->
+            @set 'current_resource', res
+            console.log @get 'current_resource'
             @close_all_form()
             @set 'show_plugin_config', true
         close_plugin_config: ->
             @set 'show_plugin_config', false
-        show_agent_config: ->
+        save_plugin_config: ->
+            console.log @get 'current_resource'
+            res = @get 'current_resource'
+            App.ajax.send
+                name: 'wizard.step5.save_plugin_config'
+                sender: @
+                data: 
+                    req_data:
+                        rid: res.id
+                        agentId: @get('agent').id
+                success: 'save_plugin_config_success'
+                error: 'save_plugin_config_error_callback'
+        show_agent_config: (res)->
+            @set 'current_resource', res
             @close_all_form()
-            @set 'show_agent_config', true
+            @load_agents()
         close_agent_config: ->
             @set 'show_agent_config', false
+        save_agent_config: ->
+            res = @get 'current_resource'
+            console.log res
+            App.ajax.send
+                name: 'wizard.step5.save_plugin_config'
+                sender: @
+                data:
+                    'rid': res.id
+                    'req_data':
+                        rid: res.id
+                        agentId: @get('agent').id
+                success: 'save_agent_config_success'
+                error: 'save_agent_config_error_callback'
         remove_resource: (res)->
             @remove_resource res
         show_child: (resource) ->

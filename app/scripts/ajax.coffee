@@ -65,7 +65,14 @@ urls =
     'wizard.step5.remove_resource':
         'real': '/resources/{rid}'
         'type': 'DELETE'
-
+    'wizard.step5.load_agents':
+        'real': '/agents'
+        'type': 'GET'
+    'wizard.step5.save_plugin_config':
+        'real': '/resources/{rid}/plugin_config'
+        'type': 'POST'
+        'format': (data) ->
+            data: data.req_data
 
 
 format_url = (url, data) ->
