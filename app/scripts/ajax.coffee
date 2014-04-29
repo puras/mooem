@@ -68,11 +68,23 @@ urls =
     'wizard.step5.load_agents':
         'real': '/agents'
         'type': 'GET'
-    'wizard.step5.save_plugin_config':
-        'real': '/resources/{rid}/plugin_config'
+    'wizard.step5.save_agent_config':
+        'real': '/resources/{rid}/agent_config'
         'type': 'POST'
         'format': (data) ->
             data: data.req_data
+    'wizard.step5.load_resource_rela_plugin_list':
+        'real': '/resources/{rid}/plugins'
+    'wizard.step5.save_resource_rela_plugin_config':
+        'real': '/resources/{rid}/plugin_config'
+        'type': 'POST'
+        'format': (data) ->
+            {
+                contentType: 'application/json; charset=utf-8'
+                data: JSON.stringify data.req_data
+            }
+    'wizard.step6.load_resource_plugin_relation':
+        'real': '/resources/plugin_relation'
 
 
 format_url = (url, data) ->

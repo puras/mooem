@@ -12,6 +12,7 @@
                     <thead>
                         <tr>
                             <th>名称</th>
+                            <th>全名</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -23,7 +24,7 @@
                             <td>
                                 <a href="javascript:void(0)" {{action 'show_child' resource}}>子资源</a>
                                 <a href="javascript:void(0)" {{action 'show_resource_form' resource}}>创建子资源</a>
-                                <a href="javascript:void(0)" {{action 'show_plugin_config'}}>配置Plugin</a>
+                                <a href="javascript:void(0)" {{action 'show_plugin_config' resource}}>配置Plugin</a>
                                 <a href="javascript:void(0)" {{action 'show_agent_config' resource}}>关联Agent</a>
                                 <a href="javascript:void(0)" {{action 'remove_resource' resource}}>移除</a>
                             </td>
@@ -38,7 +39,7 @@
         {{view App.Step5ResourceFormView}}
         {{/if}}
         {{#if show_plugin_config}}
-        {{view App.Step5PluginConfigView}}
+        {{view App.Step5PluginConfigView resourceBinding='current_resource'}}
         {{/if}}
         {{#if show_agent_config}}
         {{view App.Step5AgentConfigView}}

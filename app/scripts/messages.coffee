@@ -13,7 +13,7 @@ Em.I18n.translations =
     'installer.step3.header': '模板导入'
     'installer.step4.header': '模板指标配置'
     'installer.step5.header': '资源定义'
-    'installer.step6.header': '资源与域关联'
+    'installer.step6.header': '资源Plugin部署'
     'installer.step7.header': '域与集合关联'
     'installer.step8.header': '资源与Agent关联'
     'installer.step9.header': '资源Plugin部署'

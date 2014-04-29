@@ -173,9 +173,6 @@ App.InstallerStep5Controller = App.StepController.extend
             success: 'remove_resource_valid_success'
             error: 'remove_resource_valid_error_callback'
     remove_resource_valid_success: (data) ->
-        console.log data
-        console.log data.resources
-        console.log data.resources.length
         if data and data.resources and data.resources.length > 0
             alert '该资源下还有子资源，需删除子资源后再删除该资源'
         else
@@ -226,6 +223,38 @@ App.InstallerStep5Controller = App.StepController.extend
         else
             alert '保存失败：' + data.error_message
     save_agent_config_error_callback: ->
+        console.log 'save_agent_config_error_callback'
+
+    load_resource_rela_plugin_list_success: (data) ->
+        @set 'plugins', data.plugins
+        @set 'show_plugin_config', true
+    load_resource_rela_plugin_list_error_callback: ->
+        console.log 'load_resource_rela_plugin_list_error_callback'
+
+    save_plugin_config: (res, plugins)->
+        console.log 'in controller save_plugin_config'
+        console.log res.name
+        plugins.forEach (p) ->
+            console.log p.name
+            p.configs.forEach (conf) ->
+                console.log conf.key + '------->' + conf.value
+
+        App.ajax.send
+            name: 'wizard.step5.save_resource_rela_plugin_config'
+            sender: @
+            data:
+                rid: res.id
+                req_data: 
+                    plugins: plugins
+            success: 'save_plugin_config_success'
+            error: 'save_plugin_config_error_callback'
+    save_plugin_config_success: (data) ->
+        if data.info == 'SUCCESS'
+            alert '保存成功'
+            @close_all_form()
+        else
+            alert '保存失败：' + data.error_message
+    save_plugin_config_error_callback: ->
         console.log 'save_plugin_config_error_callback'
     actions:
         show_resource_form: (res)->
@@ -261,21 +290,27 @@ App.InstallerStep5Controller = App.StepController.extend
             @set 'current_resource', res
             console.log @get 'current_resource'
             @close_all_form()
-            @set 'show_plugin_config', true
+            App.ajax.send
+                name: 'wizard.step5.load_resource_rela_plugin_list'
+                sender: @
+                data:
+                    rid: res.id
+                success: 'load_resource_rela_plugin_list_success'
+                error: 'load_resource_rela_plugin_list_error_callback'
         close_plugin_config: ->
             @set 'show_plugin_config', false
-        save_plugin_config: ->
-            console.log @get 'current_resource'
-            res = @get 'current_resource'
-            App.ajax.send
-                name: 'wizard.step5.save_plugin_config'
-                sender: @
-                data: 
-                    req_data:
-                        rid: res.id
-                        agentId: @get('agent').id
-                success: 'save_plugin_config_success'
-                error: 'save_plugin_config_error_callback'
+        # save_plugin_config: ->
+        #     console.log @get 'current_resource'
+        #     res = @get 'current_resource'
+        #     App.ajax.send
+        #         name: 'wizard.step5.save_plugin_config'
+        #         sender: @
+        #         data: 
+        #             req_data:
+        #                 rid: res.id
+        #                 agentId: @get('agent').id
+        #         success: 'save_plugin_config_success'
+        #         error: 'save_plugin_config_error_callback'
         show_agent_config: (res)->
             @set 'current_resource', res
             @close_all_form()
@@ -286,7 +321,7 @@ App.InstallerStep5Controller = App.StepController.extend
             res = @get 'current_resource'
             console.log res
             App.ajax.send
-                name: 'wizard.step5.save_plugin_config'
+                name: 'wizard.step5.save_agent_config'
                 sender: @
                 data:
                     'rid': res.id
@@ -300,11 +335,3 @@ App.InstallerStep5Controller = App.StepController.extend
         show_child: (resource) ->
             @close_all_form()
             @load_resource_children resource
-    # actions:
-    #     prev: ->
-    #         @get('controllers.installer').setCurrentStep(4, false)
-    #         @get('controllers.installer').send('gotoStep4')
-    #     next: ->
-    #         @get('controllers.installer').setCurrentStep(6, false)
-    #         @get('controllers.installer').clear_install_options()
-    #         @get('controllers.installer').send('gotoStep6')

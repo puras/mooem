@@ -1,19 +1,21 @@
 App.InstallerStep6Controller = App.StepController.extend
-    host_name_arr: []
-    is_pattern: false
-    boot_request_id: null
-    has_submitted: false
-    inputted_again_host_names: []
-    needs: ['installer']
-
-    host_names: (->
-        @get('content.install_options.host_names')
-    ).property('content.install_options.host_names')
-
-    # actions:
-    #     prev: ->
-    #         @get('controllers.installer').setCurrentStep(5, false)
-    #         @get('controllers.installer').send('gotoStep1')
-    #     next: ->
-    #         @get('controllers.installer').setCurrentStep(7, false)
-    #         @get('controllers.installer').send('gotoStep3')
+    relations: []
+    load_data: ->
+        App.ajax.send
+            name: 'wizard.step6.load_resource_plugin_relation'
+            sender: @
+            success: 'load_resource_plugin_relation_success_callback'
+            error: 'load_resource_plugin_relation_error_callback'
+    load_resource_plugin_relation_success_callback: (data)->
+        # @set 'relations', data.relations
+        relations = []
+        data.relations.forEach (rela) ->
+            relation = App.ResourcePluginRelation.create
+                id: rela.id
+                address: rela.address
+                plugin_name: rela.tarName
+                is_checked: true
+            relations.pushObject relation
+        @set 'relations', relations
+    load_resource_plugin_relation_error_callback: ->
+        console.log 'load_resource_plugin_relation_error_callback'
