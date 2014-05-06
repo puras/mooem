@@ -85,6 +85,19 @@ urls =
             }
     'wizard.step6.load_resource_plugin_relation':
         'real': '/resources/plugin_relation'
+    'wizard.launch_deploy':
+        'real': '/deploy'
+        'type': 'POST'
+        'format': (data) ->
+            console.log data
+            console.log data.deploy_data
+            return {
+                async: false
+                contentType: 'application/json; charset=utf-8'
+                data: JSON.stringify data.deploy_data
+            }
+    'wizard.step6.deploy':
+        'real': '/deploy/{deploy_req_id}'
 
 
 format_url = (url, data) ->

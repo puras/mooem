@@ -96,4 +96,12 @@ App.InstallerStep1Controller = App.StepController.extend
             #     return false
 
             # @proceed_next()
-            @_super()
+            App.db.setSSHInfo(
+                'ssh_key': @get 'ssh_key'
+                'ssh_user': @get 'ssh_user'
+                'verbose': true
+            )
+            # @_super()
+            console.log @get('next_step')
+            @get('controllers.installer').setCurrentStep(6, false)
+            @get('controllers.installer').send('gotoStep' + 6)

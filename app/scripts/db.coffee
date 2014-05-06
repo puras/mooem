@@ -46,3 +46,16 @@ App.db.getWizardCurrentStep = (wizardType) ->
     if App.db.data[wizardType.capitalize()]
         return App.db.data[wizardType.capitalize()].currentStep
     return 0
+
+App.db.setSSHInfo = (ssh_info) ->
+    console.log 'Trace: Enter db:setSSHInfo function'
+    App.db.data = App.db.getObject 'mooem'
+    App.db.data['ssh_info'] = ssh_info
+    App.db.setObject 'mooem', App.db.data
+
+App.db.getSSHInfo = ->
+    console.log 'Trace: Entering db:getSSHInfo function'
+    App.db.data = App.db.getObject 'mooem'
+    if App.db.data['ssh_info']
+        return App.db.data['ssh_info']
+    return null

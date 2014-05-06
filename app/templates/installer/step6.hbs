@@ -22,7 +22,7 @@
                     <td>{{view Ember.Checkbox checkedBinding="rela.is_checked"}}</td>
                     <td>{{rela.address}}</td>
                     <td>{{rela.plugin_name}}</td>
-                    <td>
+                    <td>{{rela.deploy_status}}
                         <div {{bind-attr class=":progress rela.is_deploy_done::progress-striped rela.is_deploy_done::active"}} style="margin-bottom: 0;">
                             <div {{bind-attr class=":progress-bar rela.deploy_bar_color"}} style="width: 100%"></div>
                         </div>

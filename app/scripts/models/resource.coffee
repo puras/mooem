@@ -9,7 +9,7 @@ App.ResourcePluginRelation = Ember.Object.extend
     address: ''
     plugin_name: ''
     is_checked: false
-    deploy_status: 'FAILED'
+    deploy_status: 'PENDING'
     deploy_log: null
 
     is_deploy_done: (->
