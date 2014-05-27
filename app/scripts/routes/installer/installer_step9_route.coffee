@@ -1,1 +1,0 @@
-App.InstallerStep9Route = App.StepRoute.extend()

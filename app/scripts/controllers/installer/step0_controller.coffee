@@ -1,1 +1,0 @@
-App.InstallerStep0Controller = App.StepController.extend()

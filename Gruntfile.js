@@ -1,41 +1,46 @@
 'use strict'
 
-module.exports = function (grunt) {
-
-    // require('load-grunt-tasks')(grunt);
-
+module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         clean: {
-            files: ['dist']
+            files: ['public/*', '.tmp']
         },
         watch: {
             emberTemplates: {
                 // files: 'app/templates/{,*/}*.hbs',
-                files: 'app/templates/**/*.hbs',
+                files: 'app/templates/{,**/}*.hbs',
                 tasks: ['emberTemplates']
             },
             coffee: {
                 // files: ['app/scripts/{,*/}*.coffee'],
-                files: ['app/scripts/**/*.coffee'],
+                files: ['app/{,**/}*.coffee'],
                 tasks: ['coffee:dist']
             },
             neuter: {
                 // files: ['app/scripts/**/*.js'],
                 // files: ['app/scripts/{,*/}*.coffee'],
                 // files: ['app/.tmp/scripts/{,*/}*.js'],
-                files: ['app/.tmp/scripts/**/*.js'],
+                files: ['.tmp/app/{,**/}*.js'],
                 tasks: ['neuter']
+            },
+            copy: {
+                files: ['app/index.html'],
+                tasks: ['copy:main']
+            },
+            copy_res: {
+                files: ['app/assets/css/{,**/}*.css', 'app/assets/css/{,**/}*.js'],
+                tasks: ['copy:res']
             },
             livereload: {
                 options : {
                     livereload : 9090
                 },
                 files: [
-                    'app/.tmp/dist/{,*/}*.js',
-                    'app/*.html',
-                    'app/assets/styles/{,*/}*.css',
-                    'app/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+                    'public/js/{,**/}*.js',
+                    'public/{,**/}*.html',
+                    'public/css/{,**/}*.css',
+                    'public/img/{,**/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             }
         },
@@ -48,7 +53,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'app/.tmp/dist/mooem-templates.js': 'app/templates/{,*/}*.hbs'
+                    'public/js/moofo-templates.js': 'app/templates/{,*/}*.hbs'
                 }
             }
         },
@@ -56,10 +61,10 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'app/scripts',
+                    cwd: 'app',
                     // src: '{,*/}*.coffee',
                     src: '**/*.coffee',
-                    dest: 'app/.tmp/scripts',
+                    dest: '.tmp/app',
                     ext: '.js'
                 }]
             },
@@ -78,20 +83,40 @@ module.exports = function (grunt) {
                 options: {
                     template: "{%= src %}",
                     filepathTransform: function(filepath) {
-                        return 'app/.tmp/' + filepath;
+                        return '.tmp/' + filepath;
                     }
                 },
-                src: 'app/.tmp/scripts/app.js',
-                dest: 'app/.tmp/dist/mooem-scripts.js'
+                src: '.tmp/app/app.js',
+                dest: 'public/js/moofo-app.js'
+            }
+        },
+        copy: {
+            main: {
+                files: [
+                    {expand: true, cwd: 'app', src: ['index.html'], dest: 'public/'}
+                ]
+            }, 
+            res: {
+                files: [
+                    {expand: true, cwd: 'app/assets/css', src: ['{,**/}*'], dest: 'public/css/'},
+                    {expand: true, cwd: 'bower_components/bootstrap/dist/js', src: ['*.min.js'], dest: 'public/js/bootstrap/'},
+                    {expand: true, cwd: 'bower_components/bootstrap/dist/css', src: ['*.css'], dest: 'public/css/'},
+                    {expand: true, cwd: 'bower_components/bootstrap/dist/fonts', src: ['*'], dest: 'public/fonts/'},
+                    {expand: true, cwd: 'bower_components/ember', src: ['*.min.js'], dest: 'public/js/ember/'},
+                    {expand: true, cwd: 'bower_components/ember-data', src: ['*.min.js'], dest: 'public/js/ember/'},
+                    {expand: true, cwd: 'bower_components/handlebars', src: ['*.min.js'], dest: 'public/js/ember/'},
+                    {expand: true, cwd: 'bower_components/ember-i18n/lib', src: 'i18n.js', dest: 'public/js/ember/', rename: function(dest, src) { return dest + 'ember-' + src}},
+                    {expand: true, cwd: 'bower_components/jquery/dist', src: ['*.min.*'], dest: 'public/js/jquery/'},
+                ]
             }
         }
     });
-
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-neuter');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-ember-templates');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['clean']);
+    grunt.registerTask('default', ['clean', 'copy', 'emberTemplates', 'coffee', 'neuter', 'watch']);
 }

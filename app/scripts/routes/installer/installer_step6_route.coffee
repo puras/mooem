@@ -1,1 +1,0 @@
-App.InstallerStep6Route = App.StepRoute.extend()
